@@ -3,15 +3,22 @@ package ar.fiuba.tecnicas.logger.out;
 import java.util.LinkedList;
 import java.util.List;
 
+import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class OutputManager {
 
 	private List<OutputAdapter> outputs;
 		
-	public OutputManager(){
+	public OutputManager(Config config){
 		this.outputs = new LinkedList<OutputAdapter>();
+		if (config.logOnConsole()){
+			this.addOutput(new ConsoleOutputAdapter());
+		}
 		
+		for (String f : config.getFiles()){
+			this.addOutput(new FileOutputAdapter(f));
+		}
 	}
 	
 	public void addOutput(OutputAdapter o){

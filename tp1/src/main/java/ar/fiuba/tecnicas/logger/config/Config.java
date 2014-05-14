@@ -12,6 +12,7 @@ public class Config {
 	private static final String FILES_CONFIG = "files";
 	private static final String CONSOLE_CONFIG = "console";
 	private static final String FORMAT_CONFIG = "format";
+	private static final String SEPARATOR_CONFIG = "separator";
 	
 	public Config(String configFilename){
 		this.properties = new Properties();
@@ -53,5 +54,9 @@ public class Config {
 	
 	public String getFormat(){
 		return this.getProperty(FORMAT_CONFIG);
+	}
+	
+	public String getSeparator(){
+		return this.getProperty(SEPARATOR_CONFIG);
 	}
 }
