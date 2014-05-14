@@ -9,8 +9,8 @@ public class Config {
 	private Properties properties;
 	
 	private static final String FILTER_CONFIG = "filter";
-	private static final String FILES_CONFIG = "files";
-	private static final String CONSOLE_CONFIG = "console";
+	private static final String FILES_CONFIG = "file_output";
+	private static final String CONSOLE_CONFIG = "console_output";
 	private static final String FORMAT_CONFIG = "format";
 	private static final String SEPARATOR_CONFIG = "separator";
 	
