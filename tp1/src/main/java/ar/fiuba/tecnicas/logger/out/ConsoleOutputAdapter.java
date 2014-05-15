@@ -3,6 +3,11 @@ package ar.fiuba.tecnicas.logger.out;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Escribe un objeto Message a consola
+ * 
+ * 
+ * */
 
 public class ConsoleOutputAdapter extends OutputAdapter{
 

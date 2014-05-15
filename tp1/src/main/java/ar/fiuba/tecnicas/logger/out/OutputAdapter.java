@@ -3,6 +3,12 @@ package ar.fiuba.tecnicas.logger.out;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Clase generica que engloba a los adapters
+ * 
+ * 
+ * */
+
 public abstract class OutputAdapter {
 	protected MessageFormatter formatter;
 	

@@ -4,6 +4,12 @@ import java.text.SimpleDateFormat;
 
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Formatea una fecha
+ * 
+ * 
+ * */
+
 public class DateChainFormat extends ChainFormat{
 
 	private SimpleDateFormat simpleDateFormat;

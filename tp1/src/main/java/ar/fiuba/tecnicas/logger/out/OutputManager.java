@@ -7,6 +7,12 @@ import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Administra los OutputAdapters
+ * 
+ * 
+ * */
+
 public class OutputManager {
 
 	private List<OutputAdapter> outputs;
@@ -14,7 +20,7 @@ public class OutputManager {
 	
 	public OutputManager(Config config){
 		this.outputs = new LinkedList<OutputAdapter>();
-		MessageFormatter formatter = new MessageFormatter(config.getFormat());
+		MessageFormatter formatter = new MessageFormatter(config.getFormat(), config.getSeparator());
 		if (config.logOnConsole()){
 			this.addOutput(new ConsoleOutputAdapter(formatter));
 		}

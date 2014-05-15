@@ -2,6 +2,12 @@ package ar.fiuba.tecnicas.logger.formatter;
 
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Formatea un nombre de archivo
+ * 
+ * 
+ * */
+
 public class FilenameChainFormat extends ChainFormat {
 
 	@Override

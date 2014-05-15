@@ -4,6 +4,12 @@ import java.util.Date;
 
 import ar.fiuba.tecnicas.logger.app.Level;
 
+/*
+ * Responsabilities: MOdela un mensaje de log
+ * 
+ * 
+ * */
+
 public class Message {
 	private String userMessage;
     private Level level;

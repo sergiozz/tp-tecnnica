@@ -1,5 +1,11 @@
 package ar.fiuba.tecnicas.logger.app;
 
+/*
+ * Responsabilities: Modelar un nivel de logueo
+ * 
+ * 
+ * */
+
 public enum Level{
 	DEBUG(5, "DEBUG"), INFO(4, "INFO"), WARN(3, "WARN"), ERROR(2, "ERROR"), FATAL(1, "FATAL"), OFF(0, "OFF"); 
 	

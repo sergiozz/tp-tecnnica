@@ -8,6 +8,12 @@ import java.util.Properties;
 
 import ar.fiuba.tecnicas.logger.app.Level;
 
+/*
+ * Responsabilities: Clase Proxy para trabajar con el archivo de configuracion
+ * 
+ * 
+ * */
+
 public class Config {
 	private Properties properties;
 
@@ -16,6 +22,8 @@ public class Config {
 	private static final String CONSOLE_CONFIG = "console_output";
 	private static final String FORMAT_CONFIG = "format";
 	private static final String SEPARATOR_CONFIG = "separator";
+
+	private static final String DEFAULT_SEPARATOR = "-";
 
     public Config(String configFilename){
 		this.properties = new Properties();
@@ -59,7 +67,12 @@ public class Config {
 	}
 	
 	public String getSeparator(){
-		return this.getProperty(SEPARATOR_CONFIG);
+		String separator = this.getProperty(SEPARATOR_CONFIG);
+		if (separator != null && !separator.isEmpty()){
+			
+			return separator;
+		}
+		return DEFAULT_SEPARATOR;
 	}
 
 }

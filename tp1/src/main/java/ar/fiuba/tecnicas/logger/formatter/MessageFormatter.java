@@ -1,20 +1,26 @@
 package ar.fiuba.tecnicas.logger.formatter;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 import ar.fiuba.tecnicas.logger.model.Message;
 
+/*
+ * Responsabilities: Formatea un mensaje basado en el formato especificado
+ * en el archivo de properties. Crea una lista de ChainFormats 
+ * que procesan un objeto Message a la hora de tansformarlo en un String
+ * para loguearlo en un archivo o consola.
+ * 
+ * 
+ * */
+
 public class MessageFormatter {
-	private String format;
+	private String separator;
 	private List<ChainFormat> chainFormats;
 	
-	public MessageFormatter(String format) {
-		this.format = format;
+	public MessageFormatter(String format, String separator) {
+		this.separator = separator;
 		this.chainFormats = new LinkedList<ChainFormat>();
 		
 		String[] tokens = format.split("%");
@@ -58,6 +64,7 @@ public class MessageFormatter {
 		
 		for(ChainFormat f : this.chainFormats){
 			f.format(message, formattedMessage);
+			formattedMessage.append(this.separator);
 		}
 		
 		return formattedMessage.toString();

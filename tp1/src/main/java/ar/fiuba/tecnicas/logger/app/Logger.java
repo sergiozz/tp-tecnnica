@@ -4,6 +4,13 @@ import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.OutputManager;
 
+
+/*
+ * Responsabilities: Clase que presenta los servicios de logueo al usuario
+ * 
+ * 
+ * */
+
 public class Logger {
 	private static final String defaultProperties = "../resurces/default.properties"; 
 	private Config config;

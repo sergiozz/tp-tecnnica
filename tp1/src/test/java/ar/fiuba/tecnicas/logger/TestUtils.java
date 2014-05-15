@@ -48,26 +48,37 @@ public class TestUtils {
 		return message;
 	}
 	
-	public static void testFileContents(String filename) {
+	public static void testFileContents(String filename, String[] messages) {
 		try{
 			FileInputStream testFileStream = new FileInputStream(filename);
 		
 			DataInputStream in = new DataInputStream(testFileStream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
 			String line = br.readLine();
+			int i = 0;
+			while (line != null){
+				assertEquals(line, messages[i]);
+				line = br.readLine();
+				i++;
+			}
+			
 			br.close();
 			
-			File testFile = new File(filename);
-	          if (testFile.exists()){
-	        	  testFile.delete();
-	          }   
+			TestUtils.destroyFiles(filename);
 			
-			assertEquals(line, TEST_LINE);
 		}catch(IOException e){
 			System.err.println(e.getMessage());
 		}		
 	}
 
+	public static void destroyFiles(String filename){
+		File testFile = new File(filename);
+		if (testFile.exists()){
+			testFile.delete();
+		}   
+		
+	}
+	
 	public static PrintStream redirectStdOut(String filename) {
 		PrintStream console = System.out;
 
@@ -86,6 +97,6 @@ public class TestUtils {
 	}
 
 	public static MessageFormatter buildFormatter(Config config) {
-		return new MessageFormatter(config.getFormat());
+		return new MessageFormatter(config.getFormat(), config.getSeparator());
 	}
 }

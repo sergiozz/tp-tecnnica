@@ -7,6 +7,7 @@ import org.junit.Test;
 import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.app.Logger;
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 
 public class LoggerTest {
 
@@ -23,7 +24,10 @@ public class LoggerTest {
 		logger.log(TestUtils.TEST_LINE, Level.ERROR, TestUtils.TEST_FILENAME, TestUtils.TEST_METHOD_NAME);
 		logger.close();
 		
-				
+		TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);
+		for (String f : config.getFiles()){
+			TestUtils.destroyFiles(f);
+		}
 		
 		TestUtils.restoreStdOut(console);
 	}
