@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.config.Config;
 
 public class ConfigTest {
@@ -13,7 +14,7 @@ public class ConfigTest {
 		Config config = 
 				new Config("src/main/resources/default.properties");
 		
-		assertEquals(config.getFilter(), "DEBUG");
+		assertEquals(config.getLevelFilter(), Level.DEBUG);
 		assertEquals(config.getFormat(), "%d{HH:mm:ss}-%p-%t-%m");
 		assertEquals(config.getSeparator(), "-");
 		assertEquals(config.getFiles()[0], "file1");

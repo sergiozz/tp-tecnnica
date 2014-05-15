@@ -29,7 +29,7 @@ public class OutputManagerTest {
 	public void fileOutputTest(){
 		FileOutputAdapter out = new FileOutputAdapter(TEST_FILENAME);
 		out.open();
-		Message message = new Message(TestUtils.TEST_LINE);
+		Message message = TestUtils.builMessage();
 		
 		out.write(message);
 		out.close();
@@ -42,7 +42,7 @@ public class OutputManagerTest {
 		PrintStream console = TestUtils.redirectStdOut(CONSOLE_OUT_TEST_FILE);
 		
 		ConsoleOutputAdapter out = new ConsoleOutputAdapter();
-		Message message = new Message(TestUtils.TEST_LINE);
+		Message message = TestUtils.builMessage();
 		
 		out.write(message);
 		out.close();
@@ -60,7 +60,7 @@ public class OutputManagerTest {
 		Config config = TestUtils.buildConfig();
 		OutputManager manager = new OutputManager(config);
 		
-		Message message = new Message(TestUtils.TEST_LINE);
+		Message message = TestUtils.builMessage();
 		
 		manager.write(message);
 		

@@ -6,16 +6,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
+import ar.fiuba.tecnicas.logger.app.Level;
+
 public class Config {
 	private Properties properties;
-
-    private static final HashMap<String,Integer> HashLevels = new HashMap<String,Integer>();
-    private static final String DEBUG = "DEBUG";
-    private static final String INFO = "INFO";
-    private static final String WARN = "WARN";
-    private static final String ERROR = "ERROR";
-    private static final String FATAL = "FATAL";
-    private static final String OFF = "OFF";
 
 	private static final String FILTER_CONFIG = "filter";
 	private static final String FILES_CONFIG = "file_output";
@@ -24,7 +18,6 @@ public class Config {
 	private static final String SEPARATOR_CONFIG = "separator";
 
     public Config(String configFilename){
-        chargeHashLevels();
 		this.properties = new Properties();
 		FileInputStream in;
 		try{
@@ -48,8 +41,8 @@ public class Config {
 		}
 	}
 	
-	public String getFilter(){
-		return this.getProperty(FILTER_CONFIG);
+	public Level getLevelFilter(){
+		return Level.valueOf(this.getProperty(FILTER_CONFIG));
 	}
 	
 	public String[] getFiles(){
@@ -69,20 +62,4 @@ public class Config {
 		return this.getProperty(SEPARATOR_CONFIG);
 	}
 
-    public Integer getLevelFilter(String key){
-        return this.HashLevels.get(key);
-    }
-
-    public Integer getLevelFilterOfConfig() {
-        return this.getLevelFilter(this.getFilter());
-    }
-
-    private void chargeHashLevels(){
-        HashLevels.put("DEBUG",50);
-        HashLevels.put("INFO",40);
-        HashLevels.put("WARN",30);
-        HashLevels.put("ERROR",20);
-        HashLevels.put("FATAL",10);
-        HashLevels.put("OFF",0);
-    }
 }

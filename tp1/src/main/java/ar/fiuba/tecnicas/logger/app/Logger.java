@@ -20,10 +20,21 @@ public class Logger {
         this.logProcessor = new LogProcessor(this.config);
 	}
 	
-	public void log(Message message){
-        if (!logProcessor.isFiltered(message)){
-            logProcessor.processMenssage(message);
-            this.outputManager.write(message);
-        }//else ignore
+	public void log(String userMessage){
+		this.log(userMessage, Level.DEBUG);
+	}
+	
+	public void log(String userMessage, Level level){
+		this.log(userMessage, level, null);
+	}
+		
+	private void log(String userMessage, Level level, String filename) {
+		this.log(userMessage, level, filename, null);
+	}
+
+	public void log(String userMessage, Level level, String filename, String methodName){
+		Message message = logProcessor.processMessage(userMessage, level, filename, methodName);
+		this.outputManager.write(message);        
+		
 	}
 }

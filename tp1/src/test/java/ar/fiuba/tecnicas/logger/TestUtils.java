@@ -11,18 +11,30 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.Date;
 
+import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.model.Message;
 
 public class TestUtils {
 	
 	public static final String TEST_LINE = "testLine";
 	public static final String TEST_CONFIG = "src/main/resources/testConfig.properties";
-
+	private static final String TEST_FILENAME = "TestClassName";
+	private static final String TEST_METHOD_NAME = "TestMethodName";
+	
 	public static Config buildConfig(){
 		Config config = new Config(TEST_CONFIG);
 		
 		return config;
+	}
+	
+	public static Message builMessage(){
+		Message message = new Message(TEST_LINE, Level.DEBUG, TEST_FILENAME, TEST_METHOD_NAME);
+		message.setDate(new Date());
+		message.setThreadId(Thread.currentThread().getId());
+		return message;
 	}
 	
 	public static void testFileContents(String filename) {

@@ -3,6 +3,7 @@ package ar.fiuba.tecnicas.logger.app;
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.model.Message;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -10,23 +11,19 @@ import java.util.HashMap;
  */
 public class LogProcessor {
     Config config;
-    Integer level;
+    Level level;
 
     public LogProcessor(Config config) {
         this.config= config;
-        this.level = config.getLevelFilterOfConfig();
+        this.level = config.getLevelFilter();
     }
 
-    public boolean isFiltered(Message message) {
-        if (config.getLevelFilter(message.getFilter()) <= level)
-            return false;
-        else
-            return true;
-    }
-
-    public void processMenssage(Message message) {
-         long threadId = Thread.currentThread().getId();
-        //TODO
-    }
+ 	public Message processMessage(String userMessage, Level level,
+			String filename, String methodName) {
+		Message message = new Message(userMessage, level, filename, methodName);
+		message.setDate(new Date());
+		message.setThreadId(Thread.currentThread().getId());
+		return message;
+	}
 
 }

@@ -2,56 +2,35 @@ package ar.fiuba.tecnicas.logger.model;
 
 import java.util.Date;
 
+import ar.fiuba.tecnicas.logger.app.Level;
+
 public class Message {
-	private String processMessage;
-    private String filter;
-    private String originalMessage;
+	private String userMessage;
+    private Level level;
     private String methodName;
     private Date date;
+	private String filename;
+	private long threadId;
 
-    public Message(String originalMessage){
-        this.originalMessage=originalMessage;
-    }
-
-    public Message(String originalMessage, String filter){
-        this.originalMessage=originalMessage;
-        this.filter=filter;
-    }
-
-    public Message(String originalMessage, String filter, String methodName){
-        this.originalMessage=originalMessage;
-        this.filter=filter;
-        this.methodName=methodName;
-    }
-
-    public Message(String originalMessage, String filter, String methodName, Date date){
-        this.originalMessage=originalMessage;
-        this.filter=filter;
-        this.methodName=methodName;
-        this.date=date;
+    public Message(String userMessage, Level level, String filename, String methodName){
+    	this.userMessage = userMessage;
+    	this.date = new Date();
+    	this.level = level;
+    	this.methodName = methodName;
+    	this.filename = filename;
     }
 
 	public String getMessage() {
-		return processMessage;
+		return this.userMessage;
 	}
 
-	public void setMessage(String processMessage) {
-		this.processMessage = processMessage;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-    public String getFilter() {
-        return filter;
-    }
-
-    public String getDate() {
-        return date.toString();
-    }
-
-    public String getOriginalMessage() {
-        return originalMessage;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
+	public void setThreadId(long threadId) {
+		this.threadId = threadId;
+	}
+	
+	
 }
