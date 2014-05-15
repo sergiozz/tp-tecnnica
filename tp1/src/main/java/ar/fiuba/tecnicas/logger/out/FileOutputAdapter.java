@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class FileOutputAdapter extends OutputAdapter{
@@ -13,13 +14,14 @@ public class FileOutputAdapter extends OutputAdapter{
 	private BufferedWriter writer;
 	private String filename;
 	
-	public FileOutputAdapter(String filename){
+	public FileOutputAdapter(String filename, MessageFormatter formatter){
+		super(formatter);
 		this.filename = filename;		
 	}
 	
 	public void write(Message msg){
 		try{			
-			this.writer.write(msg.getMessage());
+			this.writer.write(this.formatter.formatMessage(msg));
 		}catch(IOException e){
 			
 		}

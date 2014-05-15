@@ -4,20 +4,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class OutputManager {
 
 	private List<OutputAdapter> outputs;
-		
+	private MessageFormatter formatter;	
+	
 	public OutputManager(Config config){
 		this.outputs = new LinkedList<OutputAdapter>();
+		MessageFormatter formatter = new MessageFormatter(config.getFormat());
 		if (config.logOnConsole()){
-			this.addOutput(new ConsoleOutputAdapter());
+			this.addOutput(new ConsoleOutputAdapter(formatter));
 		}
 		
 		for (String f : config.getFiles()){
-			FileOutputAdapter fileOutput = new FileOutputAdapter(f);
+			FileOutputAdapter fileOutput = new FileOutputAdapter(f, formatter);
 			fileOutput.open();
 			this.addOutput(fileOutput);
 			

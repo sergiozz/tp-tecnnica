@@ -1,20 +1,11 @@
 package ar.fiuba.tecnicas.logger;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import org.junit.Test;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.ConsoleOutputAdapter;
 import ar.fiuba.tecnicas.logger.out.FileOutputAdapter;
@@ -23,11 +14,13 @@ import ar.fiuba.tecnicas.logger.out.OutputManager;
 public class OutputManagerTest {
 
 	private static final String TEST_FILENAME = "tempTestFile";
-	private static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOurFile";
+	
 	
 	@Test
 	public void fileOutputTest(){
-		FileOutputAdapter out = new FileOutputAdapter(TEST_FILENAME);
+		Config config = TestUtils.buildConfig();
+		MessageFormatter formatter = TestUtils.buildFormatter(config);
+		FileOutputAdapter out = new FileOutputAdapter(TEST_FILENAME, formatter);
 		out.open();
 		Message message = TestUtils.builMessage();
 		
@@ -39,15 +32,17 @@ public class OutputManagerTest {
 	
 	@Test
 	public void consoleOutputTest(){
-		PrintStream console = TestUtils.redirectStdOut(CONSOLE_OUT_TEST_FILE);
+		Config config = TestUtils.buildConfig();
+		MessageFormatter formatter = TestUtils.buildFormatter(config);
+		PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 		
-		ConsoleOutputAdapter out = new ConsoleOutputAdapter();
+		ConsoleOutputAdapter out = new ConsoleOutputAdapter(formatter);
 		Message message = TestUtils.builMessage();
 		
 		out.write(message);
 		out.close();
 		
-		TestUtils.testFileContents(CONSOLE_OUT_TEST_FILE);
+		TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE);
 		
 		TestUtils.restoreStdOut(console);
 	}
@@ -56,7 +51,7 @@ public class OutputManagerTest {
 
 	@Test
 	public void outputManagerTest(){
-		PrintStream console = TestUtils.redirectStdOut(CONSOLE_OUT_TEST_FILE);
+		PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 		Config config = TestUtils.buildConfig();
 		OutputManager manager = new OutputManager(config);
 		
@@ -66,7 +61,7 @@ public class OutputManagerTest {
 		
 		manager.shutdown();
 		
-		TestUtils.testFileContents(CONSOLE_OUT_TEST_FILE);
+		TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE);
 		for ( String f : config.getFiles()){
 			TestUtils.testFileContents(f);
 		}

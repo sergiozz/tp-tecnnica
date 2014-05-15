@@ -38,4 +38,8 @@ public class Logger {
 			this.outputManager.write(message);        
 		}
 	}
+	
+	public void close(){
+		this.outputManager.shutdown();
+	}
 }

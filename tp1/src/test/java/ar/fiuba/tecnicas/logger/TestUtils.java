@@ -15,14 +15,16 @@ import java.util.Date;
 
 import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class TestUtils {
 	
 	public static final String TEST_LINE = "testLine";
 	public static final String TEST_CONFIG = "src/main/resources/testConfig.properties";
-	private static final String TEST_FILENAME = "TestClassName";
-	private static final String TEST_METHOD_NAME = "TestMethodName";
+	public static final String TEST_FILENAME = "TestClassName";
+	public static final String TEST_METHOD_NAME = "TestMethodName";
+	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOurFile";
 	
 	public static Config buildConfig(){
 		Config config = new Config(TEST_CONFIG);
@@ -81,5 +83,9 @@ public class TestUtils {
 	public static void restoreStdOut(PrintStream console){
 		System.setOut(console);
 		
+	}
+
+	public static MessageFormatter buildFormatter(Config config) {
+		return new MessageFormatter(config.getFormat());
 	}
 }

@@ -10,12 +10,14 @@ import java.util.HashMap;
  * Created by Vizcopa on 14/05/2014.
  */
 public class LogProcessor {
-    Config config;
-    Level level;
+    private Config config;
+    private Level level;
+    private int line;
 
     public LogProcessor(Config config) {
         this.config= config;
         this.level = config.getLevelFilter();
+        this.line = 0;
     }
 
  	public Message processMessage(String userMessage, Level level,
@@ -24,6 +26,8 @@ public class LogProcessor {
 			Message message = new Message(userMessage, level, filename, methodName);
 			message.setDate(new Date());
 			message.setThreadId(Thread.currentThread().getId());
+			message.setLine(this.line);
+			this.line++;
 			return message;
 		}else{
 			return null;
