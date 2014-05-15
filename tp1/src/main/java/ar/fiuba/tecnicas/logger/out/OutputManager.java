@@ -17,7 +17,10 @@ public class OutputManager {
 		}
 		
 		for (String f : config.getFiles()){
-			this.addOutput(new FileOutputAdapter(f));
+			FileOutputAdapter fileOutput = new FileOutputAdapter(f);
+			fileOutput.open();
+			this.addOutput(fileOutput);
+			
 		}
 	}
 	
