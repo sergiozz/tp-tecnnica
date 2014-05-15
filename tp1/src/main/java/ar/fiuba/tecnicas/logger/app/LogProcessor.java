@@ -20,10 +20,14 @@ public class LogProcessor {
 
  	public Message processMessage(String userMessage, Level level,
 			String filename, String methodName) {
-		Message message = new Message(userMessage, level, filename, methodName);
-		message.setDate(new Date());
-		message.setThreadId(Thread.currentThread().getId());
-		return message;
+		if (level.getValue() <= this.config.getLevelFilter().getValue()){
+			Message message = new Message(userMessage, level, filename, methodName);
+			message.setDate(new Date());
+			message.setThreadId(Thread.currentThread().getId());
+			return message;
+		}else{
+			return null;
+		}
 	}
 
 }

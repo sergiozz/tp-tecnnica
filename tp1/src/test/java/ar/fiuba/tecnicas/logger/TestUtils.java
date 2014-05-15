@@ -31,7 +31,16 @@ public class TestUtils {
 	}
 	
 	public static Message builMessage(){
-		Message message = new Message(TEST_LINE, Level.DEBUG, TEST_FILENAME, TEST_METHOD_NAME);
+		return TestUtils.builMessage(TEST_LINE);
+	}
+	
+	public static Message builMessage(String userMessage){
+		return TestUtils.builMessage(userMessage, Level.DEBUG);
+	}
+	
+	
+	public static Message builMessage(String userMessage, Level level){
+		Message message = new Message(userMessage, level, TEST_FILENAME, TEST_METHOD_NAME);
 		message.setDate(new Date());
 		message.setThreadId(Thread.currentThread().getId());
 		return message;

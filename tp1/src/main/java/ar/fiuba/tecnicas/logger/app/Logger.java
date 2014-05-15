@@ -34,7 +34,8 @@ public class Logger {
 
 	public void log(String userMessage, Level level, String filename, String methodName){
 		Message message = logProcessor.processMessage(userMessage, level, filename, methodName);
-		this.outputManager.write(message);        
-		
+		if (message != null){
+			this.outputManager.write(message);        
+		}
 	}
 }
