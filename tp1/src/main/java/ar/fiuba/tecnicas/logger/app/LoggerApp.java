@@ -1,6 +1,7 @@
 package ar.fiuba.tecnicas.logger.app;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.model.Message;
 
 public class LoggerApp {
 	public static void main (String [ ] args){
@@ -18,7 +19,7 @@ public class LoggerApp {
 		Config config = new Config(args[1]);
 		Logger logger = new Logger(config);
 		while(true){
-			logger.log("");
+			logger.log(new Message(""));
 		}
 	}
 }
