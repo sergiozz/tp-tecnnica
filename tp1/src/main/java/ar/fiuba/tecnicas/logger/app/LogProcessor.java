@@ -16,12 +16,10 @@ import java.util.HashMap;
 
 public class LogProcessor {
     private Config config;
-    private Level level;
     private int line;
 
     public LogProcessor(Config config) {
         this.config= config;
-        this.level = config.getLevelFilter();
         this.line = 0;
     }
 
