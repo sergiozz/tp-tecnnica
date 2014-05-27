@@ -2,8 +2,6 @@ package ar.fiuba.tecnicas.logger.model;
 
 import java.util.Date;
 
-import ar.fiuba.tecnicas.logger.app.Level;
-
 /*
  * Responsabilities: MOdela un mensaje de log
  * 

@@ -13,9 +13,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Date;
 
-import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class TestUtils {
@@ -72,6 +72,9 @@ public class TestUtils {
 	}
 
 	public static void destroyFiles(String filename){
+		if (filename == null){
+			return;
+		}
 		File testFile = new File(filename);
 		if (testFile.exists()){
 			testFile.delete();

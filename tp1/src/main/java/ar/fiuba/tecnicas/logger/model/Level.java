@@ -1,4 +1,4 @@
-package ar.fiuba.tecnicas.logger.app;
+package ar.fiuba.tecnicas.logger.model;
 
 /*
  * Responsabilities: Modelar un nivel de logueo

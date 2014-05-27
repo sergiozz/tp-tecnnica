@@ -1,6 +1,7 @@
 package ar.fiuba.tecnicas.logger.app;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ public class LogProcessor {
 
  	public Message processMessage(String userMessage, Level level,
 			String filename, String methodName) {
-		if (level.getValue() <= this.config.getLevelFilter().getValue()){
+		if (level.getValue() <= this.config.getLevel().getValue()){
 			Message message = new Message(userMessage, level, filename, methodName);
 			message.setDate(new Date());
 			message.setThreadId(Thread.currentThread().getId());

@@ -4,10 +4,11 @@ import java.io.PrintStream;
 
 import org.junit.Test;
 
-import ar.fiuba.tecnicas.logger.app.Level;
 import ar.fiuba.tecnicas.logger.app.Logger;
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.model.Level;
 
 public class LoggerTest {
 
@@ -25,8 +26,8 @@ public class LoggerTest {
 		logger.close();
 		
 		TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);
-		for (String f : config.getFiles()){
-			TestUtils.destroyFiles(f);
+		for (OutputConfig o : config.getOutputConfigs()){
+			TestUtils.destroyFiles(o.getPath());
 		}
 		
 		TestUtils.restoreStdOut(console);

@@ -1,5 +1,6 @@
 package ar.fiuba.tecnicas.logger.out;
 
+import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
@@ -11,13 +12,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
 
 public class ConsoleOutputAdapter extends OutputAdapter{
 
-	public ConsoleOutputAdapter(MessageFormatter formatter){
-		super(formatter);
+	public ConsoleOutputAdapter(MessageFormatter formatter, OutputConfig outputConfig){
+		super(formatter, outputConfig);
 	}
 	
 	@Override
 	public void write(Message msg) {
-		System.out.println(this.formatter.formatMessage(msg));
+		if (msg.getLevel().getValue() <= this.outputConfig.getFilter().getValue()){
+			System.out.println(this.formatter.formatMessage(msg));
+		}
 	}
 
 	@Override

@@ -11,6 +11,8 @@ import java.io.IOException;
  * 
  * */
 
+
+import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
@@ -18,16 +20,16 @@ public class FileOutputAdapter extends OutputAdapter{
 	
 	private File file;
 	private BufferedWriter writer;
-	private String filename;
 	
-	public FileOutputAdapter(String filename, MessageFormatter formatter){
-		super(formatter);
-		this.filename = filename;		
+	public FileOutputAdapter(MessageFormatter formatter, OutputConfig outputConfig){
+		super(formatter, outputConfig);
 	}
 	
 	public void write(Message msg){
-		try{			
-			this.writer.write(this.formatter.formatMessage(msg) + "\n");
+		try{
+			if (msg.getLevel().getValue() <= this.outputConfig.getFilter().getValue()){
+				this.writer.write(this.formatter.formatMessage(msg) + "\n");
+			}
 		}catch(IOException e){
 			
 		}
@@ -36,7 +38,7 @@ public class FileOutputAdapter extends OutputAdapter{
 	@Override
 	public void open() {
 		try{
-			this.file = new File(filename);
+			this.file = new File(this.outputConfig.getPath());
 		
 			if (!file.exists()) {
 				this.file.createNewFile();

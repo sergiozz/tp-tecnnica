@@ -4,6 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.config.OutputConfig;
+import ar.fiuba.tecnicas.logger.config.OutputType;
+import ar.fiuba.tecnicas.logger.exceptions.UnknownOutputTypeException;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
@@ -21,18 +24,15 @@ public class OutputManager {
 	public OutputManager(Config config){
 		this.outputs = new LinkedList<OutputAdapter>();
 		MessageFormatter formatter = new MessageFormatter(config.getFormat(), config.getSeparator());
-		if (config.logOnConsole()){
-			this.addOutput(new ConsoleOutputAdapter(formatter));
-		}
-		
-		for (String f : config.getFiles()){
-			FileOutputAdapter fileOutput = new FileOutputAdapter(f, formatter);
-			fileOutput.open();
-			this.addOutput(fileOutput);
-			
+		for (OutputConfig o : config.getOutputConfigs()){
+			try{
+				this.addOutput(OutputFactory.createOutput(o, formatter));
+			}catch(UnknownOutputTypeException e){
+				System.err.println(e.getMessage() + e.getType().toString());
+			}
 		}
 	}
-	
+
 	public void addOutput(OutputAdapter o){
 		this.outputs.add(o);
 	}

@@ -1,6 +1,7 @@
 package ar.fiuba.tecnicas.logger.app;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.OutputManager;
 
