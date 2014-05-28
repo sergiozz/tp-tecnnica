@@ -15,7 +15,6 @@ import ar.fiuba.tecnicas.logger.out.OutputManager;
 public class Logger {
     private static final String defaultProperties = "../resurces/default.properties";
     public static final String STANDARD_OUT_TXT = "StandardOut.txt";
-    public static final String UNKNOWN_METHOD = "Unknown_Method";
     private Config config;
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
@@ -42,20 +41,16 @@ public class Logger {
 
     public void off(String userMessage){log(userMessage, Level.OFF);}
 
-	public void log(String userMessage){
+	private void log(String userMessage){
 		this.log(userMessage, Level.DEBUG);
 	}
-	
-	public void log(String userMessage, Level level){
+
+    private void log(String userMessage, Level level){
 		this.log(userMessage, level, STANDARD_OUT_TXT);
 	}
 
-    public void log(String userMessage, Level level, String filename) {
-		this.log(userMessage, level, filename, UNKNOWN_METHOD);
-	}
-
-	public void log(String userMessage, Level level, String filename, String methodName){
-		Message message = logProcessor.processMessage(userMessage, level, filename, methodName);
+    private void log(String userMessage, Level level, String filename){
+		Message message = logProcessor.processMessage(userMessage, level, filename);
 		if (message != null){
 			this.outputManager.write(message);        
 		}
