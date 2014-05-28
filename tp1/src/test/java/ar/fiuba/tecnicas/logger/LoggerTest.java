@@ -19,10 +19,11 @@ public class LoggerTest {
 		PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 		
 		Logger logger = new Logger(config);
-		logger.log(TestUtils.TEST_LINE);
-		logger.log(TestUtils.TEST_LINE, Level.INFO);
-		logger.log(TestUtils.TEST_LINE, Level.DEBUG);
-		logger.log(TestUtils.TEST_LINE, Level.ERROR, TestUtils.TEST_FILENAME, TestUtils.TEST_METHOD_NAME);
+        logger.debug(TestUtils.TEST_LINE);
+        logger.warn(TestUtils.TEST_LINE);
+        logger.error(TestUtils.TEST_LINE);
+        logger.fatal(TestUtils.TEST_LINE);
+        logger.off(TestUtils.TEST_LINE);
 		logger.close();
 		
 		TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);

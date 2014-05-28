@@ -25,9 +25,14 @@ public class LogProcessor {
     }
 
  	public Message processMessage(String userMessage, Level level,
-			String filename, String methodName) {
+			String filename) {
 		if (level.getValue() <= this.config.getLevel().getValue()){
-			Message message = new Message(userMessage, level, filename, methodName);
+            StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+            //el número 5 sale del conteo por invocación de métodos que se apilan
+            String className = ste[5].getClassName();
+            String methodName = ste[5].getMethodName();
+            className = className.substring(className.lastIndexOf('.')+1);
+			Message message = new Message(userMessage, level, filename, className+":"+methodName);
 			message.setDate(new Date());
 			message.setThreadId(Thread.currentThread().getId());
 			message.setLine(this.line);
