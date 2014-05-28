@@ -1,5 +1,7 @@
 package ar.fiuba.tecnicas.logger;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.PrintStream;
 
 import org.junit.Test;
@@ -31,5 +33,16 @@ public class LoggerTest {
 		}
 		
 		TestUtils.restoreStdOut(console);
+	}
+	
+	@Test
+	public void testLevel(){
+		Logger logger = new Logger(TestUtils.buildConfig());
+		assertEquals(Boolean.FALSE, logger.isDebug());
+		assertEquals(Boolean.TRUE, logger.isInfo());
+		assertEquals(Boolean.TRUE, logger.isWarning());
+		assertEquals(Boolean.TRUE, logger.isError());
+		assertEquals(Boolean.TRUE, logger.isFatal());
+		
 	}
 }

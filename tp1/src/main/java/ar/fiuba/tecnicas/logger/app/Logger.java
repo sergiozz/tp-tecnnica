@@ -61,6 +61,26 @@ public class Logger {
 		}
 	}
 	
+	public Boolean isDebug(){
+		return (Level.DEBUG.getValue() <= this.config.getLevel().getValue());
+	}
+	
+	public Boolean isInfo(){
+		return (Level.INFO.getValue() <= this.config.getLevel().getValue());
+	}
+	
+	public Boolean isWarning(){
+		return (Level.WARN.getValue() <= this.config.getLevel().getValue());
+	}
+	
+	public Boolean isError(){
+		return (Level.ERROR.getValue() <= this.config.getLevel().getValue());
+	}
+	
+	public Boolean isFatal(){
+		return (Level.FATAL.getValue() <= this.config.getLevel().getValue());
+	}
+	
 	public void close(){
 		this.outputManager.shutdown();
 	}

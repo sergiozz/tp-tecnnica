@@ -10,6 +10,7 @@ public class OutputConfig {
 	public OutputConfig(Level filter, String path, OutputType type){
 		this.filter = filter;
 		this.path = path;
+		this.type = type;
 	}
 	
 	public Level getFilter() {
