@@ -31,7 +31,8 @@ public class FileOutputAdapter extends OutputAdapter{
 				this.writer.write(this.formatter.formatMessage(msg) + "\n");
 			}
 		}catch(IOException e){
-			
+			System.err.println(e.getMessage());
+			return;
 		}
 	}
 
@@ -56,7 +57,8 @@ public class FileOutputAdapter extends OutputAdapter{
 		try{
 			this.writer.close();
 		}catch(IOException e){
-			
+			System.err.println(e.getMessage());
+			return;
 		}
 	}
 }

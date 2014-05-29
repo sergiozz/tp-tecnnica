@@ -49,7 +49,7 @@ public class TestUtils {
 		return message;
 	}
 	
-	public static void testFileContents(String filename, String[] messages) {
+	public static void testFileContentsWithDates(String filename, String[] messages) {
 		try{
 			FileInputStream testFileStream = new FileInputStream(filename);
 		
@@ -59,6 +59,30 @@ public class TestUtils {
 			int i = 0;
 			while (line != null){
 				assertEquals(line, messages[i]);
+				line = br.readLine();
+				i++;
+			}
+			
+			br.close();
+			
+			TestUtils.destroyFiles(filename);
+			
+		}catch(IOException e){
+			System.err.println(e.getMessage());
+		}		
+	}
+	
+	public static void testFileContents(String filename, String[] messages, int level) {
+		try{
+			FileInputStream testFileStream = new FileInputStream(filename);
+		
+			DataInputStream in = new DataInputStream(testFileStream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String line = br.readLine();
+			int i = messages.length - level;
+			while (line != null){
+				String regex = "(.*)"+messages[i]+"(.*)";
+				assertEquals(Boolean.TRUE, line.matches(regex));
 				line = br.readLine();
 				i++;
 			}

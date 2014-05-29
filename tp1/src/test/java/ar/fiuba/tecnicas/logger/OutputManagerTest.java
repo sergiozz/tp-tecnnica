@@ -35,7 +35,7 @@ public class OutputManagerTest {
 			out.write(message);
 			out.close();
 			
-			TestUtils.testFileContents(TEST_FILENAME, messages);
+			TestUtils.testFileContentsWithDates(TEST_FILENAME, messages);
 		}catch(Exception e ){
 			System.err.println(e.getMessage());
 		}
@@ -58,7 +58,7 @@ public class OutputManagerTest {
 			out.write(message);
 			out.close();
 			
-			TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
+			TestUtils.testFileContentsWithDates(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
 			
 			TestUtils.restoreStdOut(console);
 		}catch(Exception e ){
@@ -84,11 +84,11 @@ public class OutputManagerTest {
 			
 			manager.shutdown();
 			
-			TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
+			TestUtils.testFileContentsWithDates(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
 			for ( OutputConfig o : config.getOutputConfigs()){
 				//if null then it is a console output
 				if (o.getPath() != null){
-					TestUtils.testFileContents(o.getPath(), messages);
+					TestUtils.testFileContentsWithDates(o.getPath(), messages);
 				}
 			}
 			

@@ -24,14 +24,28 @@ public class LoggerTest {
 		
 			Logger logger = new Logger(config);
 			logger.debug(TestUtils.TEST_LINE);
+			logger.info(TestUtils.TEST_LINE);
 			logger.warn(TestUtils.TEST_LINE);
 			logger.error(TestUtils.TEST_LINE);
 			logger.fatal(TestUtils.TEST_LINE);
 			logger.close();
 		
-			TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);
+			String[] messages = new String[5]; 
+			for (int i = 0; i <= 4; i++){
+				messages[i] = TestUtils.TEST_LINE;
+			}
+			
 			for (OutputConfig o : config.getOutputConfigs()){
-				TestUtils.destroyFiles(o.getPath());
+				int level = (o.getFilter().getValue() > config.getLevel().getValue())?
+						(config.getLevel().getValue()):
+						(o.getFilter().getValue());	
+				if (o.getPath() != null){
+					TestUtils.testFileContents(o.getPath(), messages, level);
+					TestUtils.destroyFiles(o.getPath());
+				}else{
+					TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages, level);
+					TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);
+				}
 			}
 		
 			TestUtils.restoreStdOut(console);
