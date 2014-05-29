@@ -24,15 +24,17 @@ public class LogProcessor {
         this.line = 0;
     }
 
- 	public Message processMessage(String userMessage, Level level,
-			String filename) {
+ 	public Message processMessage(String userMessage, Level level) {
 		if (level.getValue() <= this.config.getLevel().getValue()){
             StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-            //el número 5 sale del conteo por invocación de métodos que se apilan
-            String className = ste[5].getClassName();
-            String methodName = ste[5].getMethodName();
+            int index = getIndexStrakTrace(ste, level);
+
+            String className = ste[index].getClassName();
+            String methodName = ste[index].getMethodName();
+            String fileName = ste[index].getFileName();
             className = className.substring(className.lastIndexOf('.')+1);
-			Message message = new Message(userMessage, level, filename, className+":"+methodName);
+
+			Message message = new Message(userMessage, level, fileName, className+":"+methodName);
 			message.setDate(new Date());
 			message.setThreadId(Thread.currentThread().getId());
 			message.setLine(this.line);
@@ -42,5 +44,16 @@ public class LogProcessor {
 			return null;
 		}
 	}
+
+    //Se busca al metodo que llamo al logger, sabemos que fue uno anterior al del nombre level
+    private int getIndexStrakTrace(StackTraceElement[] ste, Level level) {
+
+        for (int index=1; index <= ste.length-1; index++){
+            if ((ste[index].getMethodName()).contains(level.getName().toLowerCase())){
+                return index+1;
+            }
+        }
+        return 0;
+    }
 
 }
