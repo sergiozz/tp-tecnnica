@@ -14,6 +14,7 @@ import java.io.PrintStream;
 import java.util.Date;
 
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
@@ -26,7 +27,7 @@ public class TestUtils {
 	public static final String TEST_METHOD_NAME = "TestMethodName";
 	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOurFile";
 	
-	public static Config buildConfig(){
+	public static Config buildConfig() throws FileNotFoundException, MalformedConfigFileException{
 		Config config = new Config(TEST_CONFIG);
 		
 		return config;

@@ -1,5 +1,6 @@
 package ar.fiuba.tecnicas.logger;
 
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import org.junit.Test;
@@ -21,62 +22,81 @@ public class OutputManagerTest {
 	
 	@Test
 	public void fileOutputTest(){
-		Config config = TestUtils.buildConfig();
-		MessageFormatter formatter = TestUtils.buildFormatter(config);
-		OutputConfig fileOutputConfig = new OutputConfig(Level.DEBUG, TEST_FILENAME, OutputType.FILE);
+		try{
+			Config config = TestUtils.buildConfig();
+			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			OutputConfig fileOutputConfig = new OutputConfig(Level.DEBUG, TEST_FILENAME, OutputType.FILE);
+			
+			FileOutputAdapter out = new FileOutputAdapter(formatter, fileOutputConfig);
+			out.open();
+			Message message = TestUtils.builMessage();
+			String[] messages = {formatter.formatMessage(message)};
+			
+			out.write(message);
+			out.close();
+			
+			TestUtils.testFileContents(TEST_FILENAME, messages);
+		}catch(Exception e ){
+			System.err.println(e.getMessage());
+		}
 		
-		FileOutputAdapter out = new FileOutputAdapter(formatter, fileOutputConfig);
-		out.open();
-		Message message = TestUtils.builMessage();
-		String[] messages = {formatter.formatMessage(message)};
-		
-		out.write(message);
-		out.close();
-		
-		TestUtils.testFileContents(TEST_FILENAME, messages);
 	}
 	
 	@Test
 	public void consoleOutputTest(){
-		Config config = TestUtils.buildConfig();
-		MessageFormatter formatter = TestUtils.buildFormatter(config);
-		PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
-		OutputConfig consoleOutputConfig = new OutputConfig(Level.DEBUG, 
-				TestUtils.CONSOLE_OUT_TEST_FILE, OutputType.CONSOLE);
+		try{
+			Config config = TestUtils.buildConfig();
+			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
+			OutputConfig consoleOutputConfig = new OutputConfig(Level.DEBUG, 
+					TestUtils.CONSOLE_OUT_TEST_FILE, OutputType.CONSOLE);
+			
+			ConsoleOutputAdapter out = new ConsoleOutputAdapter(formatter, consoleOutputConfig);
+			Message message = TestUtils.builMessage();
+			String[] messages = {formatter.formatMessage(message)};
+			
+			out.write(message);
+			out.close();
+			
+			TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
+			
+			TestUtils.restoreStdOut(console);
+		}catch(Exception e ){
+			System.err.println(e.getMessage());
+		}
 		
-		ConsoleOutputAdapter out = new ConsoleOutputAdapter(formatter, consoleOutputConfig);
-		Message message = TestUtils.builMessage();
-		String[] messages = {formatter.formatMessage(message)};
-		
-		out.write(message);
-		out.close();
-		
-		TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
-		
-		TestUtils.restoreStdOut(console);
 	}
 	
 	
 
 	@Test
 	public void outputManagerTest(){
-		PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
-		Config config = TestUtils.buildConfig();
-		MessageFormatter formatter = TestUtils.buildFormatter(config);
-		OutputManager manager = new OutputManager(config);
-		Message message = TestUtils.builMessage();
-		
-		String[] messages = {formatter.formatMessage(message)};
-		
-		manager.write(message);
-		
-		manager.shutdown();
-		
-		TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
-		for ( OutputConfig o : config.getOutputConfigs()){
-			TestUtils.testFileContents(o.getPath(), messages);
+		try{
+			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
+			Config config = TestUtils.buildConfig();
+			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			OutputManager manager = new OutputManager(config);
+			Message message = TestUtils.builMessage(TestUtils.TEST_LINE, Level.WARN);
+			
+			String[] messages = {formatter.formatMessage(message)};
+			
+			manager.write(message);
+			
+			manager.shutdown();
+			
+			TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
+			for ( OutputConfig o : config.getOutputConfigs()){
+				//if null then it is a console output
+				if (o.getPath() != null){
+					TestUtils.testFileContents(o.getPath(), messages);
+				}
+			}
+			
+			TestUtils.restoreStdOut(console);
+		}catch(Exception e ){
+			System.err.println(e.getMessage());
 		}
 		
-		TestUtils.restoreStdOut(console);
 	}
+		
 }
