@@ -2,6 +2,12 @@ package ar.fiuba.tecnicas.logger.config;
 
 import ar.fiuba.tecnicas.logger.model.Level;
 
+/*
+ * Responsabilities: Modela la configuracion de un medio de salida
+ *
+ *
+ * */
+
 public class OutputConfig {
 	private Level filter;
 	private String path;

@@ -5,6 +5,12 @@ import ar.fiuba.tecnicas.logger.config.OutputType;
 import ar.fiuba.tecnicas.logger.exceptions.UnknownOutputTypeException;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 
+/*
+ * Responsabilities: Factory para el tipo de salida requerido
+ *
+ *
+ * */
+
 public class OutputFactory {
 
 	public static OutputAdapter createOutput(OutputConfig o, MessageFormatter formatter)

@@ -16,7 +16,13 @@ import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
-public class FileOutputAdapter extends OutputAdapter{
+/*
+ * Responsabilities: Escribe un objeto Message en archivo
+ *
+ *
+ * */
+
+ public class FileOutputAdapter extends OutputAdapter{
 	
 	private File file;
 	private BufferedWriter writer;

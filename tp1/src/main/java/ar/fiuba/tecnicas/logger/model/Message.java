@@ -3,7 +3,7 @@ package ar.fiuba.tecnicas.logger.model;
 import java.util.Date;
 
 /*
- * Responsabilities: MOdela un mensaje de log
+ * Responsabilities: Modela un mensaje de log
  * 
  * 
  * */
