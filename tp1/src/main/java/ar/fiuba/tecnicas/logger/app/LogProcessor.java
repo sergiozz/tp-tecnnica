@@ -5,7 +5,6 @@ import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 import java.util.Date;
-import java.util.HashMap;
 
 /*
  * Responsabilities: Procesar una entrada de log del usuario,

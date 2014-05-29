@@ -1,6 +1,9 @@
 package ar.fiuba.tecnicas.logger.app;
 
+import java.io.FileNotFoundException;
+
 import ar.fiuba.tecnicas.logger.config.Config;
+import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.OutputManager;
@@ -19,7 +22,7 @@ public class Logger {
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
 	
-	public Logger(){
+	public Logger() throws FileNotFoundException, MalformedConfigFileException{
 		this(new Config(defaultProperties));
 	}
 	
@@ -38,12 +41,6 @@ public class Logger {
     public void error(String userMessage){log(userMessage, Level.ERROR);}
 
     public void fatal(String userMessage){log(userMessage, Level.FATAL);}
-
-    public void off(String userMessage){log(userMessage, Level.OFF);}
-
-	private void log(String userMessage){
-		this.log(userMessage, Level.DEBUG);
-	}
 
     private void log(String userMessage, Level level){
 		this.log(userMessage, level, STANDARD_OUT_TXT);

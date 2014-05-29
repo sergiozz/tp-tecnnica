@@ -3,12 +3,11 @@ package ar.fiuba.tecnicas.logger.config;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Properties;
 
+import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.model.Level;
 
 /*
@@ -32,7 +31,7 @@ public class Config {
 	
 	private List<OutputConfig> outputConfigs;
 
-    public Config(String configFilename){
+    public Config(String configFilename) throws FileNotFoundException, MalformedConfigFileException{
 		this.properties = new Properties();
 		this.outputConfigs = new LinkedList<OutputConfig>();
 		FileInputStream in;
@@ -41,16 +40,13 @@ public class Config {
 			this.properties.load(in);
 			this.loadOutputConfigs();
 			in.close();
-		}catch(FileNotFoundException e){
-			System.out.println(e.getMessage());
-			return;
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 			return;
 		}
 	}
 	
-	private void loadOutputConfigs() {
+	private void loadOutputConfigs() throws MalformedConfigFileException{
 		String[] pieces = this.getProperty(CONSOLE_CONFIG).split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
 		Boolean logOnConsole = new Boolean(pieces[0]);
 		if (logOnConsole){
@@ -62,6 +58,9 @@ public class Config {
 		
 		for (String f : files){
 			pieces = f.split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
+			if (pieces.length != 2){
+				throw new MalformedConfigFileException("expected : separator between filename and log filter in " + f + "\n");
+			}
 			OutputConfig fileConfig = new OutputConfig(Level.valueOf(pieces[1]), pieces[0], OutputType.FILE);
 			this.outputConfigs.add(fileConfig);
 		}
