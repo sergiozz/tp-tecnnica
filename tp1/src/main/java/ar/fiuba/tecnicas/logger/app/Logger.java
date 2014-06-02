@@ -31,6 +31,8 @@ public class Logger {
         this.logProcessor = new LogProcessor(this.config);
 	}
 
+    public void trace(String userMessage){log(userMessage, Level.TRACE);}
+
     public void debug(String userMessage){log(userMessage, Level.DEBUG);}
 
     public void info(String userMessage){log(userMessage, Level.INFO);}
@@ -48,10 +50,14 @@ public class Logger {
 		}
 	}
 	
+	public Boolean isTrace(){
+		return (Level.TRACE.getValue() <= this.config.getLevel().getValue());
+	}
+
 	public Boolean isDebug(){
 		return (Level.DEBUG.getValue() <= this.config.getLevel().getValue());
 	}
-	
+
 	public Boolean isInfo(){
 		return (Level.INFO.getValue() <= this.config.getLevel().getValue());
 	}
