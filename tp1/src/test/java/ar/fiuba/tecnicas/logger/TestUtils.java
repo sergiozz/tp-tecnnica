@@ -22,7 +22,7 @@ import ar.fiuba.tecnicas.logger.model.Message;
 public class TestUtils {
 	
 	public static final String TEST_LINE = "testLine";
-	public static final String TEST_CONFIG = "src/main/resources/testConfig.properties";
+	public static final String TEST_CONFIG = "src/test/resources/testConfig.properties";
 	public static final String TEST_FILENAME = "TestClassName";
 	public static final String TEST_METHOD_NAME = "TestMethodName";
 	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOurFile";

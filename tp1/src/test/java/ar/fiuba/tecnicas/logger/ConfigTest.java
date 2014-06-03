@@ -12,7 +12,7 @@ import ar.fiuba.tecnicas.logger.model.Level;
 
 public class ConfigTest {
 
-	private static final String CONFIG_PATH = "src/main/resources/";
+	private static final String CONFIG_PATH = "src/test/resources/";
 	
 	@Test
 	public void loadConfigTest(){
