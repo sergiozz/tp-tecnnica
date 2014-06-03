@@ -7,5 +7,11 @@ package ar.fiuba.tecnicas.logger.config;
  * */
 
  public enum OutputType {
-	FILE(), CONSOLE()
+	FILE("file"), CONSOLE("console");
+	
+	private String type;
+	
+	OutputType(String type){
+		this.type = type;
+	}
 }

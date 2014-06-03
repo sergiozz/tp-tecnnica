@@ -34,6 +34,25 @@ public class ConfigTest {
 	}
 	
 	@Test
+	public void loadXMLConfigTest(){
+		try{
+		Config config = 
+				new Config(CONFIG_PATH + "testConfig.xml");
+		
+		assertEquals(config.getLevel(), Level.DEBUG);
+		assertEquals(config.getFormat(), "%d{HH:mm:ss}-%p-%t-%m");
+		assertEquals(config.getSeparator(), "-");
+		assertEquals(config.getOutputConfigs().get(0).getPath(), null);
+		assertEquals(config.getOutputConfigs().get(1).getPath(), "file1");
+		assertEquals(config.getOutputConfigs().get(2).getPath(), "file2");
+		
+		}catch(Exception e){
+			System.err.println(e.getMessage());
+		}
+		
+	}
+	
+	@Test
 	public void loadMalformedConfig(){
 		try{
 			Config config = new Config(CONFIG_PATH + "malformedConfig.properties");

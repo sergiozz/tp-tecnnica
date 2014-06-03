@@ -17,65 +17,31 @@ import ar.fiuba.tecnicas.logger.model.Level;
  * */
 
 public class Config {
-	private Properties properties;
+	
+	private static final String PROPERTIES_SUFFIX = ".properties";
 
-	private static final String FILTER_CONFIG = "level";
-	private static final String FILES_CONFIG = "file_output";
-	private static final String CONSOLE_CONFIG = "console_output";
-	private static final String FORMAT_CONFIG = "format";
-	private static final String SEPARATOR_CONFIG = "separator";
-
-	private static final String DEFAULT_SEPARATOR = "-";
-	private static final String DEFAULT_FILE_SEPARATOR = ",";
-	private static final String DEFAULT_OUTPUT_CONFIG_SEPARATOR = ":";
+	private ConfigReaderAdapter configReader;
 	
 	private List<OutputConfig> outputConfigs;
 
     public Config(String configFilename) throws FileNotFoundException, MalformedConfigFileException{
-		this.properties = new Properties();
-		this.outputConfigs = new LinkedList<OutputConfig>();
-		FileInputStream in;
 		try{
-			in = new FileInputStream(configFilename);
-			this.properties.load(in);
-			this.loadOutputConfigs();
-			in.close();
-		}catch(IOException e){
-			System.out.println(e.getMessage());
-			return;
+	    	if (configFilename.endsWith(PROPERTIES_SUFFIX)){
+				this.configReader = new PropertiesConfigReaderAdapter();
+			}else{
+				this.configReader = new XMLConfigReaderAdapter();
+			}
+	    	this.configReader.loadConfig(configFilename);
+	    	this.outputConfigs = this.configReader.getOutputConfigs();
+		}catch(FileNotFoundException e){
+			System.err.println(e.getMessage());
+			throw e;
 		}
 	}
 	
-	private void loadOutputConfigs() throws MalformedConfigFileException{
-		String[] pieces = this.getProperty(CONSOLE_CONFIG).split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
-		Boolean logOnConsole = new Boolean(pieces[0]);
-		if (logOnConsole){
-			OutputConfig consoleConfig = new OutputConfig(Level.valueOf(pieces[1]), null, OutputType.CONSOLE);
-			this.outputConfigs.add(consoleConfig);
-		}
-		
-		String[] files = this.getProperty(FILES_CONFIG).split(DEFAULT_FILE_SEPARATOR);
-		
-		for (String f : files){
-			pieces = f.split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
-			if (pieces.length != 2){
-				throw new MalformedConfigFileException("expected : separator between filename and log filter in " + f + "\n");
-			}
-			OutputConfig fileConfig = new OutputConfig(Level.valueOf(pieces[1]), pieces[0], OutputType.FILE);
-			this.outputConfigs.add(fileConfig);
-		}
-	}
-
-	private String getProperty(String key){
-		if (this.properties.containsKey(key)){
-			return this.properties.getProperty(key);
-		}else{
-			return null;
-		}
-	}
 	
 	public Level getLevel(){
-		return Level.valueOf(this.getProperty(FILTER_CONFIG));
+		return Level.valueOf(this.configReader.getProperty(ConfigReaderAdapter.FILTER_CONFIG));
 	}
 	
 	public List<OutputConfig> getOutputConfigs(){
@@ -83,16 +49,16 @@ public class Config {
 	}
 	
 	public String getFormat(){
-		return this.getProperty(FORMAT_CONFIG);
+		return this.configReader.getProperty(ConfigReaderAdapter.FORMAT_CONFIG);
 	}
 	
 	public String getSeparator(){
-		String separator = this.getProperty(SEPARATOR_CONFIG);
+		String separator = this.configReader.getProperty(ConfigReaderAdapter.SEPARATOR_CONFIG);
 		if (separator != null && !separator.isEmpty()){
 			
 			return separator;
 		}
-		return DEFAULT_SEPARATOR;
+		return ConfigReaderAdapter.DEFAULT_SEPARATOR;
 	}
 
 }
