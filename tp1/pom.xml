@@ -8,11 +8,19 @@
   <name>logger</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+    <!--Dependencia para JUNIT -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+
+    <!--Dependencia para SLF4J -->
+     <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.7</version>
+     </dependency>
   </dependencies>
 </project>

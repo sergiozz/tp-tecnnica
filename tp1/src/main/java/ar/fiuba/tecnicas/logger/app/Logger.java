@@ -20,12 +20,8 @@ public class Logger {
     private Config config;
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
-	
-	public Logger() throws FileNotFoundException, MalformedConfigFileException{
-		this(new Config(defaultProperties));
-	}
-	
-	public Logger(Config config){
+
+	public void setConfig(Config config){
 		this.config = config;
 		this.outputManager = new OutputManager(this.config);
         this.logProcessor = new LogProcessor(this.config);
@@ -44,6 +40,15 @@ public class Logger {
     public void fatal(String userMessage){log(userMessage, Level.FATAL);}
 
     private void log(String userMessage, Level level){
+        if (config == null){
+            try {
+                setConfig(new Config(defaultProperties));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MalformedConfigFileException e) {
+                e.printStackTrace();
+            }
+        }
 		Message message = logProcessor.processMessage(userMessage, level);
 		if (message != null){
 			this.outputManager.write(message);        

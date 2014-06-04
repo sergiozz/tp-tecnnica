@@ -22,7 +22,7 @@ public class LoggerTest {
 		
 			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 		
-			Logger logger = new Logger(config);
+			Logger logger = new Logger();
 			logger.trace(TestUtils.TEST_LINE);
 			logger.debug(TestUtils.TEST_LINE);
 			logger.info(TestUtils.TEST_LINE);
@@ -58,7 +58,8 @@ public class LoggerTest {
 	@Test
 	public void testLevel(){
 		try{
-			Logger logger = new Logger(TestUtils.buildConfig());
+			Logger logger = new Logger();
+            logger.setConfig(TestUtils.buildConfig());
 			assertEquals(Boolean.FALSE, logger.isTrace());
 			assertEquals(Boolean.FALSE, logger.isDebug());
 			assertEquals(Boolean.TRUE, logger.isInfo());
