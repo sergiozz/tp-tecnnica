@@ -3,6 +3,8 @@ package org.slf4j.impl;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
+import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +21,17 @@ public class SLF4J_LoggerFactory implements ILoggerFactory  {
     @Override
     public Logger getLogger(String name) {
         synchronized (loggerMap) {
-            if (!loggerMap.containsKey(name)) {
-                loggerMap.put(name, new SLF4J_LoggerAdapter(name));
-            }
-            return loggerMap.get(name);
+        	try{
+	            if (!loggerMap.containsKey(name)) {
+	                loggerMap.put(name, new SLF4J_LoggerAdapter(name));
+	            }
+	            return loggerMap.get(name);
+        	}catch(MalformedConfigFileException e){
+        		e.printStackTrace();
+        		return null;
+        	}
         }
     }
+
+    
 }

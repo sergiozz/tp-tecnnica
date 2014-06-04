@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MessageFormatter;
 
+import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
+
 import java.text.MessageFormat;
 
 /**
@@ -14,7 +16,7 @@ public class SLF4J_LoggerAdapter implements Logger {
     private static String name = null;
     private static ar.fiuba.tecnicas.logger.app.Logger loggerApi = null;
 
-    public SLF4J_LoggerAdapter(String name) {
+    public SLF4J_LoggerAdapter(String name) throws MalformedConfigFileException{
         this.name = name;
         this.loggerApi= new ar.fiuba.tecnicas.logger.app.Logger();
     }

@@ -59,7 +59,6 @@ public class LoggerTest {
 	public void testLevel(){
 		try{
 			Logger logger = new Logger();
-            logger.setConfig(TestUtils.buildConfig());
 			assertEquals(Boolean.FALSE, logger.isTrace());
 			assertEquals(Boolean.FALSE, logger.isDebug());
 			assertEquals(Boolean.TRUE, logger.isInfo());

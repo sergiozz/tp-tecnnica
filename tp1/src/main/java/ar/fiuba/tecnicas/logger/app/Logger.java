@@ -16,18 +16,45 @@ import ar.fiuba.tecnicas.logger.out.OutputManager;
  * */
 
 public class Logger {
-    private static final String defaultProperties = "../resurces/default.properties";
+    private static final String DEFAULT_PROPERTIES = "../resurces/default.properties";
+	private static final String CONFIG_FILE_PROPERTIES = "../resurces/logger-config.properties";
+	private static final String CONFIG_FILE_XML = "../resurces/logger-config.xml";
     private Config config;
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
 
-	public void setConfig(Config config){
-		this.config = config;
-		this.outputManager = new OutputManager(this.config);
-        this.logProcessor = new LogProcessor(this.config);
+//	public void setConfig(Config config){
+//		this.config = config;
+//	}
+
+    public Logger() throws MalformedConfigFileException{
+    	this.config = getConfigFile(CONFIG_FILE_PROPERTIES);
+    	if (this.config == null){
+    		this.config = getConfigFile(CONFIG_FILE_XML);
+    		if (this.config == null){
+    			this.config = getConfigFile(DEFAULT_PROPERTIES);
+    		}
+    	}
+    	this.outputManager = new OutputManager(this.config);
+    	this.logProcessor = new LogProcessor(this.config);
+    }
+    
+    
+    
+    private Config getConfigFile(String filename) throws MalformedConfigFileException{
+    	try{
+    		Config c = new Config(filename);
+    		return c;
+    	}catch(FileNotFoundException e){
+    		return null;    		
+    	}catch(MalformedConfigFileException e ){
+    		throw e;
+    	}
 	}
 
-    public void trace(String userMessage){log(userMessage, Level.TRACE);}
+
+
+	public void trace(String userMessage){log(userMessage, Level.TRACE);}
 
     public void debug(String userMessage){log(userMessage, Level.DEBUG);}
 
@@ -40,15 +67,6 @@ public class Logger {
     public void fatal(String userMessage){log(userMessage, Level.FATAL);}
 
     private void log(String userMessage, Level level){
-        if (config == null){
-            try {
-                setConfig(new Config(defaultProperties));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (MalformedConfigFileException e) {
-                e.printStackTrace();
-            }
-        }
 		Message message = logProcessor.processMessage(userMessage, level);
 		if (message != null){
 			this.outputManager.write(message);        
