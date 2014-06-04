@@ -23,10 +23,6 @@ public class Logger {
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
 
-//	public void setConfig(Config config){
-//		this.config = config;
-//	}
-
     public Logger() throws MalformedConfigFileException{
     	this.config = getConfigFile(CONFIG_FILE_PROPERTIES);
     	if (this.config == null){

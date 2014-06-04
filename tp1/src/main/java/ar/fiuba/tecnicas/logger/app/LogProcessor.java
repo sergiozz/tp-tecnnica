@@ -33,7 +33,7 @@ public class LogProcessor {
             String fileName = ste[index].getFileName();
             className = className.substring(className.lastIndexOf('.')+1);
 
-			Message message = new Message(userMessage, level, fileName, className+":"+methodName);
+			Message message = new Message(userMessage, level, fileName, className+":"+methodName, "");
 			message.setDate(new Date());
 			message.setThreadId(Thread.currentThread().getId());
 			message.setLine(this.line);

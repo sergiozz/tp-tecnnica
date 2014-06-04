@@ -25,7 +25,8 @@ public class TestUtils {
 	public static final String TEST_CONFIG = "src/test/resources/testConfig.properties";
 	public static final String TEST_FILENAME = "TestClassName";
 	public static final String TEST_METHOD_NAME = "TestMethodName";
-	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOurFile";
+	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOutFile";
+	private static final String TEST_LOGGER_MODULE = "TestLoggerModule";
 	
 	public static Config buildConfig() throws FileNotFoundException, MalformedConfigFileException{
 		Config config = new Config(TEST_CONFIG);
@@ -43,7 +44,7 @@ public class TestUtils {
 	
 	
 	public static Message builMessage(String userMessage, Level level){
-		Message message = new Message(userMessage, level, TEST_FILENAME, TEST_METHOD_NAME);
+		Message message = new Message(userMessage, level, TEST_FILENAME, TEST_METHOD_NAME, TEST_LOGGER_MODULE);
 		message.setDate(new Date());
 		message.setThreadId(Thread.currentThread().getId());
 		return message;

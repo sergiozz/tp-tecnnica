@@ -16,13 +16,15 @@ public class Message {
 	private String filename;
 	private long threadId;
 	private int line;
+	private String loggerModule;
 
-    public Message(String userMessage, Level level, String filename, String methodName){
+    public Message(String userMessage, Level level, String filename, String methodName, String loggerModule){
     	this.userMessage = userMessage;
     	this.date = new Date();
     	this.level = level;
     	this.methodName = methodName;
     	this.filename = filename;
+    	this.loggerModule = loggerModule;
     }
 
 	public String getMessage() {
@@ -67,5 +69,9 @@ public class Message {
 	
 	public int getLine(){
 		return this.line;
+	}
+
+	public String getLoggerModule() {
+		return this.loggerModule;
 	}
 }

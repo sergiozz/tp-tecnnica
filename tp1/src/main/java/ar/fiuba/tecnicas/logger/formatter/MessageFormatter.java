@@ -55,6 +55,9 @@ public class MessageFormatter {
 			case 'M':
 				this.chainFormats.add(new MethodNameChainFormat());
 				break;
+			case 'g':
+				this.chainFormats.add(new LoggerNameChainFormat());
+				break;
 			}
 		}
 	}
