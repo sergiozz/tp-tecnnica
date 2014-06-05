@@ -13,8 +13,8 @@ import java.text.MessageFormat;
  */
 public class SLF4J_LoggerAdapter implements Logger {
 
-    private static String name = null;
-    private static ar.fiuba.tecnicas.logger.app.Logger loggerApi = null;
+    private String name;
+    private ar.fiuba.tecnicas.logger.app.Logger loggerApi;
 
     public SLF4J_LoggerAdapter(String name) throws MalformedConfigFileException{
         this.name = name;
@@ -53,7 +53,7 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void trace(String s, Throwable throwable) {
-        //TODO
+        loggerApi.trace(s, throwable);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void debug(String s, Throwable throwable) {
-        //TODO
+        loggerApi.debug(s, throwable);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void info(String s, Throwable throwable) {
-        //TODO
+        loggerApi.info(s, throwable);
     }
 
     @Override
@@ -233,7 +233,7 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void warn(String s, Throwable throwable) {
-        //TODO
+        loggerApi.warn(s, throwable);
     }
 
     @Override
@@ -293,7 +293,7 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void error(String s, Throwable throwable) {
-        //TODO
+        loggerApi.error(s, throwable);
     }
 
     @Override

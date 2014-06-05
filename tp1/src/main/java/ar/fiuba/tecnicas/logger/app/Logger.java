@@ -35,8 +35,6 @@ public class Logger {
     	this.logProcessor = new LogProcessor(this.config);
     }
     
-    
-    
     private Config getConfigFile(String filename) throws MalformedConfigFileException{
     	try{
     		Config c = new Config(filename);
@@ -48,22 +46,34 @@ public class Logger {
     	}
 	}
 
+	public void trace(String userMessage){log(userMessage, Level.TRACE, null);}
+
+    public void debug(String userMessage){log(userMessage, Level.DEBUG, null);}
+
+    public void info(String userMessage){log(userMessage, Level.INFO, null);}
+
+    public void warn(String userMessage){log(userMessage, Level.WARN, null);}
+
+    public void error(String userMessage){log(userMessage, Level.ERROR, null);}
+
+    public void fatal(String userMessage){log(userMessage, Level.FATAL, null);}
 
 
-	public void trace(String userMessage){log(userMessage, Level.TRACE);}
+    public void trace(String userMessage, Throwable exception){log(userMessage, Level.TRACE, exception);}
 
-    public void debug(String userMessage){log(userMessage, Level.DEBUG);}
+    public void debug(String userMessage, Throwable exception){log(userMessage, Level.DEBUG, exception);}
 
-    public void info(String userMessage){log(userMessage, Level.INFO);}
+    public void info(String userMessage, Throwable exception){log(userMessage, Level.INFO, exception);}
 
-    public void warn(String userMessage){log(userMessage, Level.WARN);}
+    public void warn(String userMessage, Throwable exception){log(userMessage, Level.WARN, exception);}
 
-    public void error(String userMessage){log(userMessage, Level.ERROR);}
+    public void error(String userMessage, Throwable exception){log(userMessage, Level.ERROR, exception);}
 
-    public void fatal(String userMessage){log(userMessage, Level.FATAL);}
+    public void fatal(String userMessage, Throwable exception){log(userMessage, Level.FATAL, exception);}
 
-    private void log(String userMessage, Level level){
-		Message message = logProcessor.processMessage(userMessage, level);
+
+    private void log(String userMessage, Level level, Throwable exception){
+		Message message = logProcessor.processMessage(userMessage, level, exception);
 		if (message != null){
 			this.outputManager.write(message);        
 		}

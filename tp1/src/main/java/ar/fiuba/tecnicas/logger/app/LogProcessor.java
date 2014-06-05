@@ -23,7 +23,7 @@ public class LogProcessor {
         this.line = 0;
     }
 
- 	public Message processMessage(String userMessage, Level level) {
+ 	public Message processMessage(String userMessage, Level level, Throwable exception) {
 		if (level.getValue() <= this.config.getLevel().getValue()){
             StackTraceElement[] ste = Thread.currentThread().getStackTrace();
             int index = getIndexStrakTrace(ste, level);
@@ -32,6 +32,10 @@ public class LogProcessor {
             String methodName = ste[index].getMethodName();
             String fileName = ste[index].getFileName();
             className = className.substring(className.lastIndexOf('.')+1);
+
+            if (exception != null){
+                userMessage += ": "+ exception.getMessage();
+            }
 
 			Message message = new Message(userMessage, level, fileName, className+":"+methodName, "");
 			message.setDate(new Date());
