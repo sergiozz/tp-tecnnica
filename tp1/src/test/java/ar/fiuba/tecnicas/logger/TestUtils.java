@@ -15,14 +15,14 @@ import java.util.Date;
 
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 public class TestUtils {
 	
 	public static final String TEST_LINE = "testLine";
-	public static final String TEST_CONFIG = "src/test/resources/testConfig.properties";
+	public static final String TEST_CONFIG = "resources/logger-config.properties";
 	public static final String TEST_FILENAME = "TestClassName";
 	public static final String TEST_METHOD_NAME = "TestMethodName";
 	public static final String CONSOLE_OUT_TEST_FILE = "tempConsoleOutFile";
@@ -125,7 +125,7 @@ public class TestUtils {
 		
 	}
 
-	public static MessageFormatter buildFormatter(Config config) {
-		return new MessageFormatter(config.getFormat(), config.getSeparator());
+	public static TextMessageFormatter buildFormatter(Config config) {
+		return new TextMessageFormatter(config.getFormat(), config.getSeparator());
 	}
 }

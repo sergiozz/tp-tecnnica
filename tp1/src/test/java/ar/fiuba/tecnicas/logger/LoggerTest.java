@@ -10,7 +10,7 @@ import org.junit.Test;
 import ar.fiuba.tecnicas.logger.app.Logger;
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 
 public class LoggerTest {
@@ -60,7 +60,7 @@ public class LoggerTest {
 		try{
 			Logger logger = new Logger();
 			assertEquals(Boolean.FALSE, logger.isTrace());
-			assertEquals(Boolean.FALSE, logger.isDebug());
+			assertEquals(Boolean.TRUE, logger.isDebug());
 			assertEquals(Boolean.TRUE, logger.isInfo());
 			assertEquals(Boolean.TRUE, logger.isWarning());
 			assertEquals(Boolean.TRUE, logger.isError());

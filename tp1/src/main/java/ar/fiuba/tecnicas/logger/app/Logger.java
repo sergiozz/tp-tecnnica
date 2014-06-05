@@ -16,9 +16,9 @@ import ar.fiuba.tecnicas.logger.out.OutputManager;
  * */
 
 public class Logger {
-    private static final String DEFAULT_PROPERTIES = "../resurces/default.properties";
-	private static final String CONFIG_FILE_PROPERTIES = "../resurces/logger-config.properties";
-	private static final String CONFIG_FILE_XML = "../resurces/logger-config.xml";
+    private static final String DEFAULT_PROPERTIES = "resources/default.properties";
+	private static final String CONFIG_FILE_PROPERTIES = "resources/logger-config.properties";
+	private static final String CONFIG_FILE_XML = "resurces/logger-config.xml";
     private Config config;
 	private OutputManager outputManager;
     private LogProcessor logProcessor;

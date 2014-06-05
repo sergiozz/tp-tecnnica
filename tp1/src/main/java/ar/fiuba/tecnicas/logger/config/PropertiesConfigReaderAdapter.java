@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -32,6 +31,8 @@ public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 			in = new FileInputStream(filename);
 			this.properties.load(in);
 			in.close();
+		}catch (FileNotFoundException e){
+			throw e;
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 			return;
