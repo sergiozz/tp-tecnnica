@@ -1,7 +1,7 @@
 package ar.fiuba.tecnicas.logger.out;
 
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 /*
@@ -11,10 +11,10 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * */
 
 public abstract class OutputAdapter {
-	protected MessageFormatter formatter;
+	protected TextMessageFormatter formatter;
 	protected OutputConfig outputConfig;
 	
-	public OutputAdapter(MessageFormatter formatter, OutputConfig outputConfig){
+	public OutputAdapter(TextMessageFormatter formatter, OutputConfig outputConfig){
 		this.formatter = formatter;
 		this.outputConfig = outputConfig;
 	}

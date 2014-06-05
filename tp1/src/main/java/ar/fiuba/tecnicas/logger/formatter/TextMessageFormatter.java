@@ -15,11 +15,12 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * 
  * */
 
-public class MessageFormatter {
+public class TextMessageFormatter extends AbstractMessageFormatter{
 	private String separator;
 	private List<ChainFormat> chainFormats;
 	
-	public MessageFormatter(String format, String separator) {
+	public TextMessageFormatter(String format, String separator) {
+		super();
 		this.separator = separator;
 		this.chainFormats = new LinkedList<ChainFormat>();
 		
@@ -62,6 +63,7 @@ public class MessageFormatter {
 		}
 	}
 
+	@Override
 	public String formatMessage(Message message){
 		StringBuffer formattedMessage = new StringBuffer();
 		

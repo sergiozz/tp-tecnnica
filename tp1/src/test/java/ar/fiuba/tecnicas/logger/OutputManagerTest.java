@@ -8,7 +8,7 @@ import org.junit.Test;
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.config.OutputType;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.ConsoleOutputAdapter;
@@ -24,7 +24,7 @@ public class OutputManagerTest {
 	public void fileOutputTest(){
 		try{
 			Config config = TestUtils.buildConfig();
-			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
 			OutputConfig fileOutputConfig = new OutputConfig(Level.DEBUG, TEST_FILENAME, OutputType.FILE);
 			
 			FileOutputAdapter out = new FileOutputAdapter(formatter, fileOutputConfig);
@@ -46,7 +46,7 @@ public class OutputManagerTest {
 	public void consoleOutputTest(){
 		try{
 			Config config = TestUtils.buildConfig();
-			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
 			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 			OutputConfig consoleOutputConfig = new OutputConfig(Level.DEBUG, 
 					TestUtils.CONSOLE_OUT_TEST_FILE, OutputType.CONSOLE);
@@ -74,7 +74,7 @@ public class OutputManagerTest {
 		try{
 			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 			Config config = TestUtils.buildConfig();
-			MessageFormatter formatter = TestUtils.buildFormatter(config);
+			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
 			OutputManager manager = new OutputManager(config);
 			Message message = TestUtils.builMessage(TestUtils.TEST_LINE, Level.WARN);
 			

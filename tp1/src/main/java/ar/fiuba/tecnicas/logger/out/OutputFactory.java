@@ -3,7 +3,7 @@ package ar.fiuba.tecnicas.logger.out;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.config.OutputType;
 import ar.fiuba.tecnicas.logger.exceptions.UnknownOutputTypeException;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 
 /*
  * Responsabilities: Factory para el tipo de salida requerido
@@ -13,7 +13,7 @@ import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 
 public class OutputFactory {
 
-	public static OutputAdapter createOutput(OutputConfig o, MessageFormatter formatter)
+	public static OutputAdapter createOutput(OutputConfig o, TextMessageFormatter formatter)
 		throws UnknownOutputTypeException{
 		if (o.getType() == OutputType.CONSOLE){
 			return new ConsoleOutputAdapter(formatter, o);			

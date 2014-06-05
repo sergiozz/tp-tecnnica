@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 /*
@@ -27,7 +27,7 @@ import ar.fiuba.tecnicas.logger.model.Message;
 	private File file;
 	private BufferedWriter writer;
 	
-	public FileOutputAdapter(MessageFormatter formatter, OutputConfig outputConfig){
+	public FileOutputAdapter(TextMessageFormatter formatter, OutputConfig outputConfig){
 		super(formatter, outputConfig);
 	}
 	
