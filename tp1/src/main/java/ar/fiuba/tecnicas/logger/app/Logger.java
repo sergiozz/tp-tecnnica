@@ -22,6 +22,8 @@ public class Logger {
     private Config config;
 	private OutputManager outputManager;
     private LogProcessor logProcessor;
+    private String name;
+
 
     public Logger() throws MalformedConfigFileException{
     	this.config = getConfigFile(CONFIG_FILE_PROPERTIES);
@@ -33,6 +35,11 @@ public class Logger {
     	}
     	this.outputManager = new OutputManager(this.config);
     	this.logProcessor = new LogProcessor(this.config);
+    }
+
+    public Logger(String name)throws MalformedConfigFileException{
+        this.name = name;
+        new Logger();
     }
     
     private Config getConfigFile(String filename) throws MalformedConfigFileException{
@@ -73,7 +80,7 @@ public class Logger {
 
 
     private void log(String userMessage, Level level, Throwable exception){
-		Message message = logProcessor.processMessage(userMessage, level, exception);
+		Message message = logProcessor.processMessage(userMessage, level, exception, this.name);
 		if (message != null){
 			this.outputManager.write(message);        
 		}
@@ -106,4 +113,8 @@ public class Logger {
 	public void close(){
 		this.outputManager.shutdown();
 	}
+
+    public String getName() {
+        return name;
+    }
 }

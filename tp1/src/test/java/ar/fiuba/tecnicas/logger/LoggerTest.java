@@ -1,19 +1,23 @@
 package ar.fiuba.tecnicas.logger;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
+import ar.fiuba.tecnicas.logger.app.LoggerFactory;
 import org.junit.Test;
 
 import ar.fiuba.tecnicas.logger.app.Logger;
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
-import ar.fiuba.tecnicas.logger.model.Level;
 
 public class LoggerTest {
+
+    public static final String MODULE_ONE = "Module One";
+    public static final String MODULE_TWO = "Module Two";
+    public static final String MODULE_THREE = "Module Three";
 
 	@Test
 	public void testLogger(){
@@ -68,6 +72,25 @@ public class LoggerTest {
 		}catch(Exception e ){
 			System.err.println(e.getMessage());
 		}
-		
 	}
+
+    @Test
+    public void testModules(){
+        try {
+            LoggerFactory loggerFactory = new LoggerFactory();
+            Logger logger1 = loggerFactory.getLogger(MODULE_ONE);
+            Logger logger2 = loggerFactory.getLogger(MODULE_TWO);
+            Logger logger3 = loggerFactory.getLogger(MODULE_THREE);
+
+            assertFalse(logger2.getName().contains(MODULE_ONE));
+            assertFalse(logger3.getName().contains(MODULE_TWO));
+            assertFalse(logger1.getName().contains(MODULE_THREE));
+
+            assertTrue(logger1.getName().contains(MODULE_ONE));
+            assertTrue(logger2.getName().contains(MODULE_TWO));
+            assertTrue(logger3.getName().contains(MODULE_THREE));
+        }catch(Exception e ){
+            System.err.println(e.getMessage());
+        }
+    }
 }
