@@ -5,10 +5,11 @@ import java.util.List;
 
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.config.OutputType;
 import ar.fiuba.tecnicas.logger.exceptions.UnknownOutputTypeException;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
+import ar.fiuba.tecnicas.logger.outputFactory.OutputFactory;
 
 /*
  * Responsabilities: Administra los OutputAdapters
@@ -19,21 +20,20 @@ import ar.fiuba.tecnicas.logger.model.Message;
 public class OutputManager {
 
 	private List<OutputAdapter> outputs;
-	private TextMessageFormatter formatter;	
 	
 	public OutputManager(Config config){
 		this.outputs = new LinkedList<OutputAdapter>();
-		TextMessageFormatter formatter = new TextMessageFormatter(config.getFormat(), config.getSeparator());
 		for (OutputConfig o : config.getOutputConfigs()){
 			try{
-				this.addOutput(OutputFactory.createOutput(o, formatter));
+				this.addOutput(OutputFactory.createOutput(config, o, config.getFormat()));
 			}catch(UnknownOutputTypeException e){
 				System.err.println(e.getMessage() + e.getType().toString());
 			}
 		}
 	}
 
-	public void addOutput(OutputAdapter o){
+	private void addOutput(OutputAdapter o){
+		o.open();
 		this.outputs.add(o);
 	}
 		

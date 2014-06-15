@@ -4,11 +4,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
-import ar.fiuba.tecnicas.logger.model.Level;
+import ar.fiuba.tecnicas.logger.model.Format;
 
 public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 
@@ -24,7 +31,7 @@ public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 	}
 
 	@Override
-	public void loadConfig(String filename) throws  FileNotFoundException, MalformedConfigFileException {
+	public void loadConfig(String filename) throws  FileNotFoundException{
 		this.properties = new Properties();
 		FileInputStream in;
 		try{
@@ -41,25 +48,50 @@ public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 
 	@Override
 	public List<OutputConfig> getOutputConfigs() throws MalformedConfigFileException{
-		String[] pieces = this.getProperty(CONSOLE_CONFIG).split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
-		Boolean logOnConsole = new Boolean(pieces[0]);
+		
 		List<OutputConfig> outputConfigs = new ArrayList<OutputConfig>();
-		if (logOnConsole){
-			OutputConfig consoleConfig = new OutputConfig(Level.valueOf(pieces[1]), null, OutputType.CONSOLE);
-			outputConfigs.add(consoleConfig);
-		}
-		
-		String[] files = this.getProperty(FILES_CONFIG).split(DEFAULT_FILE_SEPARATOR);
-		
-		for (String f : files){
-			pieces = f.split(DEFAULT_OUTPUT_CONFIG_SEPARATOR);
-			if (pieces.length != 2){
-				throw new MalformedConfigFileException("expected : separator between filename and log filter in " + f + "\n");
+		JSONParser parser = new JSONParser();
+		try{
+			JSONObject jObject = (JSONObject)parser.parse(this.getProperty(ConfigReaderAdapter.OUTPUTS_CONFIG));
+			JSONArray jsonArray = (JSONArray)jObject.get(ConfigReaderAdapter.OUTPUTS_CONFIG);
+			Iterator<JSONObject> jsonOutputs = (Iterator<JSONObject>)jsonArray.iterator(); 
+			
+			while(jsonOutputs.hasNext()){
+				JSONObject j = jsonOutputs.next();
+				HashMap<String, String> map = new HashMap<String, String>();
+				Set<String> keys = j.keySet();
+				for (String k : keys){
+					String value = (String)j.get(k);
+					map.put(k, value);
+				}
+				this.replaceAlias(map, OutputConfig.OUTPUT_FACTORY_CLASS_NAME);
+				this.replaceAlias(map, OutputConfig.FILTER_CLASS_NAME);
+				OutputConfig outputConfig = new OutputConfig(map);
+				outputConfigs.add(outputConfig);
 			}
-			OutputConfig fileConfig = new OutputConfig(Level.valueOf(pieces[1]), pieces[0], OutputType.FILE);
-			outputConfigs.add(fileConfig);
-		}
-		
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
 		return outputConfigs;
 	}
+
+	private void replaceAlias(HashMap<String, String> map, String tag) throws MalformedConfigFileException{
+		String factoryClassName = this.getProperty(map.get(tag));
+		if (factoryClassName == null){
+			String message = "No existe la propiedad " + map.get(OutputConfig.OUTPUT_FACTORY_CLASS_NAME);
+			throw new MalformedConfigFileException(message);
+		}
+		map.put(tag, factoryClassName);
+	}
+
+	@Override
+	public Format getFormat() {
+		String separator = this.getProperty(ConfigReaderAdapter.SEPARATOR_CONFIG);
+		if (separator == null){separator = ConfigReaderAdapter.DEFAULT_SEPARATOR;}
+		String format = this.getProperty(ConfigReaderAdapter.FORMAT_CONFIG);
+		String formatType = this.getProperty(ConfigReaderAdapter.FORMAT_TYPE);
+		String formatterClassName = this.getProperty(formatType);
+		return new Format(format, formatterClassName, separator);
+	}
+
 }

@@ -12,7 +12,11 @@ import java.io.IOException;
  * */
 
 
+
+
+
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Message;
 
@@ -26,14 +30,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
 	
 	private File file;
 	private BufferedWriter writer;
-	
-	public FileOutputAdapter(TextMessageFormatter formatter, OutputConfig outputConfig){
-		super(formatter, outputConfig);
+	private String filename;
+		
+	public FileOutputAdapter(String filename){
+		this.filename = filename;
 	}
 	
 	public void write(Message msg){
 		try{
-			if (msg.getLevel().getValue() <= this.outputConfig.getFilter().getValue()){
+			if (this.filter.filter(msg)){
 				this.writer.write(this.formatter.formatMessage(msg) + "\n");
 			}
 		}catch(IOException e){
@@ -45,8 +50,7 @@ import ar.fiuba.tecnicas.logger.model.Message;
 	@Override
 	public void open() {
 		try{
-			this.file = new File(this.outputConfig.getPath());
-		
+			this.file = new File(this.filename);
 			if (!file.exists()) {
 				this.file.createNewFile();
 			}

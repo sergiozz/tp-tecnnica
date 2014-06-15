@@ -8,24 +8,27 @@ import org.junit.Test;
 
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
+import ar.fiuba.tecnicas.logger.model.Format;
 import ar.fiuba.tecnicas.logger.model.Level;
 
 public class ConfigTest {
 
-	private static final String CONFIG_PATH = "src/test/resources/";
+	private static final String CONFIG_PATH = "resources/";
 	
 	@Test
 	public void loadConfigTest(){
 		try{
 		Config config = 
 				new Config(CONFIG_PATH + "default.properties");
-		
+		Format format = config.getFormat();
 		assertEquals(config.getLevel(), Level.DEBUG);
-		assertEquals(config.getFormat(), "%d{HH:mm:ss}-%p-%t-%m");
-		assertEquals(config.getSeparator(), "-");
-		assertEquals(config.getOutputConfigs().get(0).getPath(), null);
-		assertEquals(config.getOutputConfigs().get(1).getPath(), "file1");
-		assertEquals(config.getOutputConfigs().get(2).getPath(), "file2");
+		assertEquals(format.getFormatString(), "%d{HH:mm:ss}-%p-%t-%m");
+		assertEquals(format.getSeparator(), "-");
+		
+		assertEquals(config.getOutputConfigs().get(0).getValueForKey("filename"), "console");
+		assertEquals(config.getOutputConfigs().get(1).getValueForKey("filename"), "log");
+		assertEquals(config.getOutputConfigs().get(2).getValueForKey("filename"), "log_2");
 		
 		}catch(Exception e){
 			System.err.println(e.getMessage());
@@ -37,14 +40,16 @@ public class ConfigTest {
 	public void loadXMLConfigTest(){
 		try{
 		Config config = 
-				new Config(CONFIG_PATH + "testConfig.xml");
+				new Config(CONFIG_PATH + "logger-config.xml");
 		
+		Format format = config.getFormat();
 		assertEquals(config.getLevel(), Level.DEBUG);
-		assertEquals(config.getFormat(), "%d{HH:mm:ss}-%p-%t-%m");
-		assertEquals(config.getSeparator(), "-");
-		assertEquals(config.getOutputConfigs().get(0).getPath(), null);
-		assertEquals(config.getOutputConfigs().get(1).getPath(), "file1");
-		assertEquals(config.getOutputConfigs().get(2).getPath(), "file2");
+		assertEquals(format.getFormatString(), "%d{HH:mm:ss}-%p-%t-%m");
+		assertEquals(format.getSeparator(), "-");
+		
+		assertEquals(config.getOutputConfigs().get(0).getValueForKey("filename"), "console");
+		assertEquals(config.getOutputConfigs().get(1).getValueForKey("filename"), "log");
+		assertEquals(config.getOutputConfigs().get(2).getValueForKey("filename"), "log_2");
 		
 		}catch(Exception e){
 			System.err.println(e.getMessage());

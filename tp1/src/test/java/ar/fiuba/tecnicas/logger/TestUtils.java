@@ -125,7 +125,7 @@ public class TestUtils {
 		
 	}
 
-	public static TextMessageFormatter buildFormatter(Config config) {
-		return new TextMessageFormatter(config.getFormat(), config.getSeparator());
+	public static TextMessageFormatter buildTextFormatter(Config config) {
+		return new TextMessageFormatter(config.getFormat());
 	}
 }

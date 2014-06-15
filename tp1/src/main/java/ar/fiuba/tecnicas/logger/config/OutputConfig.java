@@ -1,5 +1,10 @@
 package ar.fiuba.tecnicas.logger.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import ar.fiuba.tecnicas.logger.filter.AbstractFilter;
+import ar.fiuba.tecnicas.logger.model.Format;
 import ar.fiuba.tecnicas.logger.model.Level;
 
 /*
@@ -9,26 +14,20 @@ import ar.fiuba.tecnicas.logger.model.Level;
  * */
 
 public class OutputConfig {
-	private Level filter;
-	private String path;
-	private OutputType type;
 	
-	public OutputConfig(Level filter, String path, OutputType type){
-		this.filter = filter;
-		this.path = path;
-		this.type = type;
-	}
-	
-	public Level getFilter() {
-		return filter;
-	}
-	public String getPath() {
-		return path;
-	}
+	public static final String FILTER_CLASS_NAME = "filter_type";
+	public static final String OUTPUT_FACTORY_CLASS_NAME = "output_type";
+	public static final String OUTPUT_NAME = "filename";
+	public static final String FILTER_DATA = "filter_data";
 
-	public OutputType getType() {
-		return type;
+	private Map<String,String> values;
+	
+	public OutputConfig(Map<String,String> values){
+		this.values = values;
 	}
 	
+	public String getValueForKey(String key){
+		return this.values.get(key);
+	}
 	
 }

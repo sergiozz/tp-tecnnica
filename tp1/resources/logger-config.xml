@@ -4,22 +4,39 @@
 	<version>1.0</version>
 	<level>DEBUG</level>
 	<format>%d{HH:mm:ss}-%p-%t-%m</format>
+	<format_type>TEXT_FORMAT</format_type>
 	<outputs>
 		<output>
 			<filename>console</filename>
-			<type>console</type>
-			<filter>DEBUG</filter>
+			<output_type>CONSOLE</output_type>
+			<filter_type>LEVEL</filter_type>
+			<filter_data>DEBUG</filter_data>
 		</output>
 		<output>
-			<filename>file1</filename>
-			<type>file</type>
-			<filter>INFO</filter>
+			<filename>log</filename>
+			<output_type>FILE</output_type>
+			<filter_type>LEVEL</filter_type>
+			<filter_data>INFO</filter_data>
 		</output>
 		<output>
-			<filename>file2</filename>
-			<type>file</type>
-			<filter>WARN</filter>
+			<filename>log_2</filename>
+			<output_type>FILE</output_type>
+			<filter_type>REGEX</filter_type>
+			<filter_data>[0-9]</filter_data>
 		</output>
 	</outputs>
 	<separator>-</separator>
+	<filters>
+		<filter id="LEVEL">ar.fiuba.tecnicas.logger.filter.LevelFilter</filter>
+		<filter id="REGEX">ar.fiuba.tecnicas.logger.filter.RegexFilter</filter>
+	</filters>
+	<output_types>
+		<output_factory id="CONSOLE">ar.fiuba.tecnicas.logger.outputFactory.ConsoleOutputFactory</output_factory>
+		<output_factory id="FILE">ar.fiuba.tecnicas.logger.outputFactory.FileOutputFactory</output_factory>	
+	</output_types>
+	<format_types>
+		<format_class id="TEXT_FORMAT">ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter</format_class>
+		<format_class id="JSON_FORMAT">ar.fiuba.tecnicas.logger.formatter.JSONMessageFormatter</format_class>
+	</format_types>
+	
 </config>

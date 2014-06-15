@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import ar.fiuba.tecnicas.logger.model.Format;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 /*
@@ -15,16 +16,14 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * 
  * */
 
-public class TextMessageFormatter extends AbstractMessageFormatter{
-	private String separator;
+public class TextMessageFormatter extends MessageFormatter{
 	private List<ChainFormat> chainFormats;
 	
-	public TextMessageFormatter(String format, String separator) {
-		super();
-		this.separator = separator;
+	public TextMessageFormatter(Format format) {
+		super(format);
 		this.chainFormats = new LinkedList<ChainFormat>();
 		
-		String[] tokens = format.split("%");
+		String[] tokens = this.format.getFormatString().split("%");
 		
 		//TODO: mejorar esto a un mapa estatico
 		
@@ -69,7 +68,7 @@ public class TextMessageFormatter extends AbstractMessageFormatter{
 		
 		for(ChainFormat f : this.chainFormats){
 			f.format(message, formattedMessage);
-			formattedMessage.append(this.separator);
+			formattedMessage.append(this.format.getSeparator());
 		}
 		
 		return formattedMessage.toString();

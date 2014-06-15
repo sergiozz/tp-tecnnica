@@ -7,30 +7,28 @@ import org.junit.Test;
 
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
-import ar.fiuba.tecnicas.logger.config.OutputType;
 import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 import ar.fiuba.tecnicas.logger.out.ConsoleOutputAdapter;
 import ar.fiuba.tecnicas.logger.out.FileOutputAdapter;
 import ar.fiuba.tecnicas.logger.out.OutputManager;
+import ar.fiuba.tecnicas.logger.outputFactory.OutputFactory;
 
 public class OutputManagerTest {
 
-	private static final String TEST_FILENAME = "tempTestFile";
+	private static final String TEST_FILENAME = "log";
 	
 	
 	@Test
 	public void fileOutputTest(){
 		try{
 			Config config = TestUtils.buildConfig();
-			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
-			OutputConfig fileOutputConfig = new OutputConfig(Level.DEBUG, TEST_FILENAME, OutputType.FILE);
 			
-			FileOutputAdapter out = new FileOutputAdapter(formatter, fileOutputConfig);
+			FileOutputAdapter out = (FileOutputAdapter)OutputFactory.createOutput(config, config.getOutputConfigs().get(1), config.getFormat());
 			out.open();
 			Message message = TestUtils.builMessage();
-			String[] messages = {formatter.formatMessage(message)};
+			String[] messages = {config.getFormat().getMessageFormatter().formatMessage(message)};
 			
 			out.write(message);
 			out.close();
@@ -45,15 +43,13 @@ public class OutputManagerTest {
 	@Test
 	public void consoleOutputTest(){
 		try{
-			Config config = TestUtils.buildConfig();
-			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
 			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
-			OutputConfig consoleOutputConfig = new OutputConfig(Level.DEBUG, 
-					TestUtils.CONSOLE_OUT_TEST_FILE, OutputType.CONSOLE);
+			Config config = TestUtils.buildConfig();
 			
-			ConsoleOutputAdapter out = new ConsoleOutputAdapter(formatter, consoleOutputConfig);
+			ConsoleOutputAdapter out = (ConsoleOutputAdapter)OutputFactory.createOutput(config, config.getOutputConfigs().get(0), config.getFormat());
+			out.open();
 			Message message = TestUtils.builMessage();
-			String[] messages = {formatter.formatMessage(message)};
+			String[] messages = {config.getFormat().getMessageFormatter().formatMessage(message)};
 			
 			out.write(message);
 			out.close();
@@ -74,11 +70,11 @@ public class OutputManagerTest {
 		try{
 			PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
 			Config config = TestUtils.buildConfig();
-			TextMessageFormatter formatter = TestUtils.buildFormatter(config);
+			
 			OutputManager manager = new OutputManager(config);
 			Message message = TestUtils.builMessage(TestUtils.TEST_LINE, Level.WARN);
 			
-			String[] messages = {formatter.formatMessage(message)};
+			String[] messages = {config.getFormat().getMessageFormatter().formatMessage(message)};
 			
 			manager.write(message);
 			
@@ -87,8 +83,8 @@ public class OutputManagerTest {
 			TestUtils.testFileContentsWithDates(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
 			for ( OutputConfig o : config.getOutputConfigs()){
 				//if null then it is a console output
-				if (o.getPath() != null){
-					TestUtils.testFileContentsWithDates(o.getPath(), messages);
+				if (o.getValueForKey("filename") != null && !o.getValueForKey("filename").equalsIgnoreCase("console")){
+					TestUtils.testFileContentsWithDates(o.getValueForKey("filename"), messages);
 				}
 			}
 			
