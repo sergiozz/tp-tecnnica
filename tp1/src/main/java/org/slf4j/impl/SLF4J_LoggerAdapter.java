@@ -4,26 +4,22 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MessageFormatter;
 
-import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
-
-import java.text.MessageFormat;
-
 /**
  * Created by Vizcopa on 03/06/2014.
  */
 public class SLF4J_LoggerAdapter implements Logger {
 
-    private String name;
     private ar.fiuba.tecnicas.logger.app.Logger loggerApi;
+    private final static ar.fiuba.tecnicas.logger.app.LoggerFactory loggerFactoryApi =
+            new ar.fiuba.tecnicas.logger.app.LoggerFactory();
 
-    public SLF4J_LoggerAdapter(String name) throws MalformedConfigFileException{
-        this.name = name;
-        this.loggerApi= new ar.fiuba.tecnicas.logger.app.Logger();
+    public SLF4J_LoggerAdapter(String name) {
+        this.loggerApi = loggerFactoryApi.getLogger(name);
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return loggerApi.getName();
     }
 
     @Override
@@ -38,17 +34,18 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void trace(String s, Object o) {
-        loggerApi.trace(MessageFormat.format(s, o));
+
+        loggerApi.trace(MessageFormatter.format(s, o).getMessage());
     }
 
     @Override
     public void trace(String s, Object o, Object o2) {
-        loggerApi.trace(MessageFormat.format(s, o, o2));
+        loggerApi.trace(MessageFormatter.format(s, o, o2).getMessage());
     }
 
     @Override
     public void trace(String s, Object... objects) {
-        loggerApi.trace(MessageFormat.format(s, objects));
+        loggerApi.trace(MessageFormatter.arrayFormat(s, objects).getMessage());
     }
 
     @Override
@@ -98,17 +95,17 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void debug(String s, Object o) {
-        loggerApi.debug(MessageFormat.format(s, o));
+        loggerApi.debug(MessageFormatter.format(s, o).getMessage());
     }
 
     @Override
     public void debug(String s, Object o, Object o2) {
-        loggerApi.debug(MessageFormat.format(s, o, o2));
+        loggerApi.debug(MessageFormatter.format(s, o, o2).getMessage());
     }
 
     @Override
     public void debug(String s, Object... objects) {
-        loggerApi.debug(MessageFormat.format(s, objects));
+        loggerApi.debug(MessageFormatter.arrayFormat(s, objects).getMessage());
     }
 
     @Override
@@ -158,17 +155,17 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void info(String s, Object o) {
-        loggerApi.info(MessageFormat.format(s, o));
+        loggerApi.info(MessageFormatter.format(s, o).getMessage());
     }
 
     @Override
     public void info(String s, Object o, Object o2) {
-        loggerApi.info(MessageFormat.format(s, o, o2));
+        loggerApi.info(MessageFormatter.format(s, o, o2).getMessage());
     }
 
     @Override
     public void info(String s, Object... objects) {
-        loggerApi.info(MessageFormat.format(s, objects));
+        loggerApi.info(MessageFormatter.arrayFormat(s, objects).getMessage());
     }
 
     @Override
@@ -218,17 +215,17 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void warn(String s, Object o) {
-        loggerApi.warn(MessageFormat.format(s, o));
+        loggerApi.warn(MessageFormatter.format(s, o).getMessage());
     }
 
     @Override
     public void warn(String s, Object o, Object o2) {
-        loggerApi.warn(MessageFormat.format(s, o, o2));
+        loggerApi.warn(MessageFormatter.format(s, o, o2).getMessage());
     }
 
     @Override
     public void warn(String s, Object... objects) {
-        loggerApi.warn(MessageFormat.format(s, objects));
+        loggerApi.warn(MessageFormatter.arrayFormat(s, objects).getMessage());
     }
 
     @Override
@@ -278,17 +275,17 @@ public class SLF4J_LoggerAdapter implements Logger {
 
     @Override
     public void error(String s, Object o) {
-        loggerApi.error(MessageFormat.format(s, o));
+        loggerApi.error(MessageFormatter.format(s, o).getMessage());
     }
 
     @Override
     public void error(String s, Object o, Object o2) {
-        loggerApi.error(MessageFormat.format(s, o, o2));
+        loggerApi.error(MessageFormatter.format(s, o, o2).getMessage());
     }
 
     @Override
     public void error(String s, Object... objects) {
-        loggerApi.error(MessageFormat.format(s, objects));
+        loggerApi.error(MessageFormatter.arrayFormat(s, objects).getMessage());
     }
 
     @Override

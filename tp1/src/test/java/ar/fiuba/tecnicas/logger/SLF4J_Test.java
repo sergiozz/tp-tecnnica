@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -95,6 +96,44 @@ public class SLF4J_Test {
     }
 
     @Test
+    public void testOthersFormsLogger(){
+        try{
+            Config config = TestUtils.buildConfig();
+
+            PrintStream console = TestUtils.redirectStdOut(TestUtils.CONSOLE_OUT_TEST_FILE);
+
+            Logger logger = LoggerFactory.getLogger(SLF4J_Test.class);
+            logger.trace("Prueba {} de parametros","x");
+            logger.debug("Prueba {} {} parametros","x","de");
+            logger.info("Prueba {} de parametros","x");
+            logger.warn("Prueba {} {} parametros","x","de");
+            logger.error("Prueba {} {} {}","x","de","parametros");
+
+            String[] messages = new String[5];
+            for (int i = 0; i <= 4; i++){
+                messages[i] = "Prueba x de parametros";
+            }
+
+            for (OutputConfig o : config.getOutputConfigs()){
+                int level = (o.getFilter().getValue() > config.getLevel().getValue())?
+                        (config.getLevel().getValue()):
+                        (o.getFilter().getValue());
+                if (o.getPath() != null){
+                    TestUtils.testFileContents(o.getPath(), messages, level);
+                    TestUtils.destroyFiles(o.getPath());
+                }else{
+                    TestUtils.testFileContents(TestUtils.CONSOLE_OUT_TEST_FILE, messages, level);
+                    TestUtils.destroyFiles(TestUtils.CONSOLE_OUT_TEST_FILE);
+                }
+            }
+
+            TestUtils.restoreStdOut(console);
+        }catch(Exception e ){
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Test
     public void testExceptions(){
         try{
             Config config = TestUtils.buildConfig();
@@ -104,9 +143,9 @@ public class SLF4J_Test {
 
             Logger logger = LoggerFactory.getLogger(SLF4J_Test.class);
             logger.trace(TestUtils.TEST_LINE,exception);
-            logger.debug(TestUtils.TEST_LINE,exception);
-            logger.info(TestUtils.TEST_LINE,exception);
-            logger.warn(TestUtils.TEST_LINE,exception);
+            logger.debug(TestUtils.TEST_LINE, exception);
+            logger.info(TestUtils.TEST_LINE, exception);
+            logger.warn(TestUtils.TEST_LINE, exception);
             logger.error(TestUtils.TEST_LINE,exception);
 
             String[] messages = new String[5];
