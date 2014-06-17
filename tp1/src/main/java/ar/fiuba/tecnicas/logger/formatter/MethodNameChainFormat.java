@@ -9,10 +9,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * */
 
 public class MethodNameChainFormat extends ChainFormat {
+    private static final String FIELDNAME = "Metodo";
 
 	@Override
-	public void format(Message message, StringBuffer buffer) {
-		buffer.append(message.getMethodName());
+	public String format(Message message) {
+        return message.getMethodName();
 	}
 
+    @Override
+    public String getFieldName(){
+        return this.FIELDNAME;
+    }
 }

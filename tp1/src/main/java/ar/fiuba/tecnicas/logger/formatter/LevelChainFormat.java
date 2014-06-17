@@ -9,10 +9,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * */
 
 public class LevelChainFormat extends ChainFormat {
+    private static final String FIELDNAME = "Nivel";
 
 	@Override
-	public void format(Message message, StringBuffer buffer) {
-		buffer.append(message.getLevel().getName());
+	public String format(Message message) {
+        return message.getLevel().getName();
 	}
 
+    @Override
+    public String getFieldName(){
+        return this.FIELDNAME;
+    }
 }

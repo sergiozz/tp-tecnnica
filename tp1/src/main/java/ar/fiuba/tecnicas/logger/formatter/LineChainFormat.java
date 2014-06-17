@@ -9,10 +9,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
  * */
 
 public class LineChainFormat extends ChainFormat {
+    private static final String FIELDNAME = "Linea";
 
 	@Override
-	public void format(Message message, StringBuffer buffer) {
-		buffer.append(message.getLine());
+	public String format(Message message) {
+        return (new Integer (message.getLine())).toString();
 	}
 
+    @Override
+    public String getFieldName(){
+        return this.FIELDNAME;
+    }
 }

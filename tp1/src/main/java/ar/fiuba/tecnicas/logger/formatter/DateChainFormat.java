@@ -13,14 +13,20 @@ import ar.fiuba.tecnicas.logger.model.Message;
 public class DateChainFormat extends ChainFormat{
 
 	private SimpleDateFormat simpleDateFormat;
+    private static final String FIELDNAME = "Fecha";
 
 	public DateChainFormat(SimpleDateFormat simpleDateFormat){
 		this.simpleDateFormat = simpleDateFormat;
 	}
 	
 	@Override
-	public void format(Message message, StringBuffer buffer) {
-		buffer.append(this.simpleDateFormat.format(message.getDate()));
+	public String format(Message message) {
+		return this.simpleDateFormat.format(message.getDate());
 	}
+
+    @Override
+    public String getFieldName(){
+        return this.FIELDNAME;
+    }
 
 }

@@ -10,9 +10,15 @@ import ar.fiuba.tecnicas.logger.model.Message;
 
 public class FilenameChainFormat extends ChainFormat {
 
+    private static final String FIELDNAME = "Archivo";
+
 	@Override
-	public void format(Message message, StringBuffer buffer) {
-		buffer.append(message.getFilename());
+	public String format(Message message) {
+        return message.getFilename();
 	}
 
+    @Override
+    public String getFieldName(){
+        return this.FIELDNAME;
+    }
 }
