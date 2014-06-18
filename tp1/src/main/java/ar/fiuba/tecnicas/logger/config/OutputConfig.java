@@ -15,7 +15,7 @@ import ar.fiuba.tecnicas.logger.model.Level;
 
 public class OutputConfig {
 	
-	public static final String FILTER_CLASS_NAME = "filter_type";
+	public static final String FILTER_FACTORY_CLASS_NAME = "filter_type";
 	public static final String OUTPUT_FACTORY_CLASS_NAME = "output_type";
 	public static final String OUTPUT_NAME = "filename";
 	public static final String FILTER_DATA = "filter_data";

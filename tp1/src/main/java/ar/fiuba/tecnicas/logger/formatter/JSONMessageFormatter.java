@@ -10,8 +10,6 @@ import org.json.simple.JSONObject;
 
 public class JSONMessageFormatter extends MessageFormatter{
 
-    private List<ChainFormat> chainFormats;
-
 	public JSONMessageFormatter(Format format) {
         super(format);
 

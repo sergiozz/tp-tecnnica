@@ -6,6 +6,7 @@ import ar.fiuba.tecnicas.logger.config.ConfigReaderAdapter;
 import ar.fiuba.tecnicas.logger.config.OutputConfig;
 import ar.fiuba.tecnicas.logger.exceptions.UnknownOutputTypeException;
 import ar.fiuba.tecnicas.logger.filter.AbstractFilter;
+import ar.fiuba.tecnicas.logger.filter.factory.AbstractFilterFactory;
 import ar.fiuba.tecnicas.logger.formatter.JSONMessageFormatter;
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
@@ -45,10 +46,10 @@ public class OutputFactory {
 	}
 
 	private static AbstractFilter createFilter(OutputConfig o) {
-		String filterName = o.getValueForKey(OutputConfig.FILTER_CLASS_NAME);
+		String filterName = o.getValueForKey(OutputConfig.FILTER_FACTORY_CLASS_NAME);
 		try{
-			AbstractFilter filter = (AbstractFilter)Class.forName(filterName).newInstance();
-			filter.setData(o.getValueForKey(OutputConfig.FILTER_DATA));
+			AbstractFilterFactory filterFactory = (AbstractFilterFactory)Class.forName(filterName).newInstance();
+			AbstractFilter filter = filterFactory.createFilter(o);
 			return filter;
 		}catch(Exception e){
 			e.printStackTrace();

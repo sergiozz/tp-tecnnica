@@ -9,8 +9,8 @@ public class RegexFilter extends AbstractFilter {
 	public RegexFilter(){
 	}
 
-	public void setData(String data){
-		this.regex = data;
+	public void setRegex(String regex){
+		this.regex = regex;
 		
 	}
 	@Override

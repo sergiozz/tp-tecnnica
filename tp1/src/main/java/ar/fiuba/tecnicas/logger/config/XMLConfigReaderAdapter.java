@@ -61,7 +61,7 @@ public class XMLConfigReaderAdapter extends ConfigReaderAdapter {
 	            }
 	        }
 	        this.replaceAlias(values, XMLConfigReaderAdapter.OUTPUT_FACTORIES_TAGNAME, OutputConfig.OUTPUT_FACTORY_CLASS_NAME);
-	        this.replaceAlias(values, XMLConfigReaderAdapter.OUTPUT_FILTERS_TAGNAME, OutputConfig.FILTER_CLASS_NAME);
+	        this.replaceAlias(values, XMLConfigReaderAdapter.OUTPUT_FILTERS_TAGNAME, OutputConfig.FILTER_FACTORY_CLASS_NAME);
 			OutputConfig outputConfig = new OutputConfig(values); 
 			outputs.add(outputConfig);
 	    }

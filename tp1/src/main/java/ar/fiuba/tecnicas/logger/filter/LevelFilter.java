@@ -10,9 +10,9 @@ public class LevelFilter extends AbstractFilter {
 	public LevelFilter(){
 	}
 	
-	public void setData(String data){
+	public void setLevel(Level level){
 		
-		this.level = Level.valueOf(data);
+		this.level = level;
 	}
 	
 	@Override

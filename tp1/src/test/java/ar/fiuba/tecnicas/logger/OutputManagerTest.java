@@ -82,7 +82,6 @@ public class OutputManagerTest {
 			
 			TestUtils.testFileContentsWithDates(TestUtils.CONSOLE_OUT_TEST_FILE, messages);
 			for ( OutputConfig o : config.getOutputConfigs()){
-				//if null then it is a console output
 				if (o.getValueForKey("filename") != null && !o.getValueForKey("filename").equalsIgnoreCase("console")){
 					TestUtils.testFileContentsWithDates(o.getValueForKey("filename"), messages);
 				}

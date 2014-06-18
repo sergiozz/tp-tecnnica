@@ -65,7 +65,7 @@ public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 					map.put(k, value);
 				}
 				this.replaceAlias(map, OutputConfig.OUTPUT_FACTORY_CLASS_NAME);
-				this.replaceAlias(map, OutputConfig.FILTER_CLASS_NAME);
+				this.replaceAlias(map, OutputConfig.FILTER_FACTORY_CLASS_NAME);
 				OutputConfig outputConfig = new OutputConfig(map);
 				outputConfigs.add(outputConfig);
 			}

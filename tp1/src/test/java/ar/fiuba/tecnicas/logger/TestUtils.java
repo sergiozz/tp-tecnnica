@@ -12,9 +12,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import ar.fiuba.tecnicas.logger.config.Config;
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
+import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 import ar.fiuba.tecnicas.logger.formatter.TextMessageFormatter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
@@ -30,6 +33,12 @@ public class TestUtils {
 	
 	public static Config buildConfig() throws FileNotFoundException, MalformedConfigFileException{
 		Config config = new Config(TEST_CONFIG);
+		
+		return config;
+	}
+	
+	public static Config buildConfig(String configFilename) throws FileNotFoundException, MalformedConfigFileException{
+		Config config = new Config(configFilename);
 		
 		return config;
 	}
@@ -127,5 +136,39 @@ public class TestUtils {
 
 	public static TextMessageFormatter buildTextFormatter(Config config) {
 		return new TextMessageFormatter(config.getFormat());
+	}
+
+	public static void testFileContentsForRegexFilter(String filename,
+			String[] messages, String regex, int level) {
+		List<String> unfilteredMessages = new LinkedList<String>();
+		for(String m : messages){
+			if (!m.matches(regex)){
+				unfilteredMessages.add(m);
+			}
+			
+		}
+		
+		try{
+			FileInputStream testFileStream = new FileInputStream(filename);
+		
+			DataInputStream in = new DataInputStream(testFileStream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String line = br.readLine();
+			int i = messages.length - level;
+			while (line != null){
+				String regexMessage = "(.*)"+messages[i]+"(.*)";
+				assertEquals(Boolean.TRUE, line.matches(regexMessage));
+				line = br.readLine();
+				i++;
+			}
+			
+			br.close();
+			
+			TestUtils.destroyFiles(filename);
+			
+		}catch(IOException e){
+			System.err.println(e.getMessage());
+		}		
+		
 	}
 }

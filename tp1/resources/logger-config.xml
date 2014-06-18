@@ -27,8 +27,8 @@
 	</outputs>
 	<separator>-</separator>
 	<filters>
-		<filter id="LEVEL">ar.fiuba.tecnicas.logger.filter.LevelFilter</filter>
-		<filter id="REGEX">ar.fiuba.tecnicas.logger.filter.RegexFilter</filter>
+		<filter id="LEVEL">ar.fiuba.tecnicas.logger.filter.factory.LevelFilterFactory</filter>
+		<filter id="REGEX">ar.fiuba.tecnicas.logger.filter.factory.RegexFilterFactory</filter>
 	</filters>
 	<output_types>
 		<output_factory id="CONSOLE">ar.fiuba.tecnicas.logger.outputFactory.ConsoleOutputFactory</output_factory>
