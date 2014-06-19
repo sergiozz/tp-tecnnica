@@ -7,6 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.LinkedList;
 
+/*
+ * Responsabilities: Clase base abstracta que provee una interfaz comun a los formatters ademas de proveer una forma de parsear el formato crudo
+ * que toma desde la clase Format. 
+ * 
+ * 
+ * */
+
 public abstract class MessageFormatter {
 	protected Format format;
     protected List<ChainFormat> chainFormats;

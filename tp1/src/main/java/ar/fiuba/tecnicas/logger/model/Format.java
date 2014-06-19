@@ -4,6 +4,11 @@ import java.lang.reflect.Constructor;
 
 import ar.fiuba.tecnicas.logger.formatter.MessageFormatter;
 
+/*
+ * Responsabilities: Modela un formato de mensaje.
+ * 
+ * */
+
 public class Format {
 	private String format;
 	private MessageFormatter formatter;

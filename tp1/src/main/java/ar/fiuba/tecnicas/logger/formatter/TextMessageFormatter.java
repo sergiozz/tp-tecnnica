@@ -8,13 +8,11 @@ import ar.fiuba.tecnicas.logger.model.Format;
 import ar.fiuba.tecnicas.logger.model.Message;
 
 /*
- * Responsabilities: Formatea un mensaje basado en el formato especificado
- * en el archivo de properties. Crea una lista de ChainFormats 
- * que procesan un objeto Message a la hora de tansformarlo en un String
- * para loguearlo en un archivo o consola.
+ * Responsabilities: Dar formato texto a una representacion String de un Mensaje.
  * 
  * 
  * */
+
 
 public class TextMessageFormatter extends MessageFormatter{
 

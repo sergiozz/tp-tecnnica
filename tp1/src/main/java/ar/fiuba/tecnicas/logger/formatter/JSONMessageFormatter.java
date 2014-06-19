@@ -8,6 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import org.json.simple.JSONObject;
 
+/*
+ * Responsabilities: Dar formato Json a una representacion String de un Mensaje.
+ * 
+ * 
+ * */
+
 public class JSONMessageFormatter extends MessageFormatter{
 
 	public JSONMessageFormatter(Format format) {

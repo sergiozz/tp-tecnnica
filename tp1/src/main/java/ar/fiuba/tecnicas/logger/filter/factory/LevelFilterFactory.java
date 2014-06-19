@@ -5,6 +5,13 @@ import ar.fiuba.tecnicas.logger.filter.AbstractFilter;
 import ar.fiuba.tecnicas.logger.filter.LevelFilter;
 import ar.fiuba.tecnicas.logger.model.Level;
 
+
+/*
+ * Responsabilities: Clase que crea un LevelFilter y le coloca la informacion necesaria para que trabaje.
+ * 
+ * 
+ * */
+
 public class LevelFilterFactory extends AbstractFilterFactory {
 
 	@Override

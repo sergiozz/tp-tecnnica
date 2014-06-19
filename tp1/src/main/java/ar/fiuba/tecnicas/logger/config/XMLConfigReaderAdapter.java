@@ -19,6 +19,13 @@ import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.model.Format;
 import ar.fiuba.tecnicas.logger.model.Level;
 
+
+/*
+ * Responsabilities: provee acceso a un archivo xml e interpreta su contenido.
+ * 
+ * 
+ * */
+
 public class XMLConfigReaderAdapter extends ConfigReaderAdapter {
 
 	private Document xmlDoc;

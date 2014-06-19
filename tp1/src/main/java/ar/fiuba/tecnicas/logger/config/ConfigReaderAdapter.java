@@ -7,6 +7,12 @@ import java.util.Map;
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.model.Format;
 
+/*
+ * Responsabilities: Clase base que define la interfaz de los readers de configuracion.
+ * 
+ * 
+ * */
+
 public abstract class ConfigReaderAdapter {
 	
 	public static final String DEFAULT_SEPARATOR = "-";

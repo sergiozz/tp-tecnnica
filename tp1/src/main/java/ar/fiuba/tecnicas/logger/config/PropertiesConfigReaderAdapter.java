@@ -17,6 +17,12 @@ import org.json.simple.parser.JSONParser;
 import ar.fiuba.tecnicas.logger.exceptions.MalformedConfigFileException;
 import ar.fiuba.tecnicas.logger.model.Format;
 
+/*
+ * Responsabilities: Provee acceso a un archivo de tipo properties e interpreta su contenido.
+ * 
+ * 
+ * */
+
 public class PropertiesConfigReaderAdapter extends ConfigReaderAdapter {
 
 	private Properties properties;

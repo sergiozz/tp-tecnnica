@@ -3,6 +3,13 @@ package ar.fiuba.tecnicas.logger.filter;
 import ar.fiuba.tecnicas.logger.model.Level;
 import ar.fiuba.tecnicas.logger.model.Message;
 
+
+/*
+ * Responsabilities: Clase que implementa AbstractFilter y provee filtro por nivel.
+ * 
+ * 
+ * */
+
 public class LevelFilter extends AbstractFilter {
 
 	private Level level;
