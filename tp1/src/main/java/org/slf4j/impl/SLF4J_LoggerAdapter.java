@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.helpers.MessageFormatter;
 
-/**
- * Created by Vizcopa on 03/06/2014.
- */
+/*
+ * Responsabilities: Adapter para la integracion de nuestra api con SLF4J
+ *
+ *
+ * */
 public class SLF4J_LoggerAdapter implements Logger {
 
     private ar.fiuba.tecnicas.logger.app.Logger loggerApi;

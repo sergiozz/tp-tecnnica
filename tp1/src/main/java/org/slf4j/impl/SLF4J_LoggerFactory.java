@@ -10,8 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Vizcopa on 03/06/2014.
+ * Responsabilities: Factory para un SLF4J_LoggerAdapter
  */
+
 public class SLF4J_LoggerFactory implements ILoggerFactory  {
 
     @Override

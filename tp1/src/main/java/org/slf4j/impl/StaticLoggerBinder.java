@@ -3,9 +3,11 @@ package org.slf4j.impl;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.spi.LoggerFactoryBinder;
 
-/**
- * Created by Vizcopa on 03/06/2014.
- */
+/*
+ * Responsabilities: Binding para la integracion del SLF4J_LoggerFactory con slf4j
+ *
+ *
+ * */
 public class StaticLoggerBinder implements LoggerFactoryBinder {
 
     /**

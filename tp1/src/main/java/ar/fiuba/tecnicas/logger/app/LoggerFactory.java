@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Vizcopa on 05/06/2014.
+ * Responsabilities: Factory del Logger, devuelve instancias de estas segun su nombre asociado.
  */
 public class LoggerFactory {
     private Map<String, Logger> loggerMap;
