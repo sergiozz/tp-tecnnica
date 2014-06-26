@@ -40,6 +40,7 @@ import ar.fiuba.tecnicas.logger.model.Message;
 		try{
 			if (this.filter.filter(msg)){
 				this.writer.write(this.formatter.formatMessage(msg) + "\n");
+                this.writer.flush();
 			}
 		}catch(IOException e){
 			System.err.println(e.getMessage());
@@ -65,6 +66,7 @@ import ar.fiuba.tecnicas.logger.model.Message;
 	@Override
 	public void close() {
 		try{
+            this.writer.flush();
 			this.writer.close();
 		}catch(IOException e){
 			System.err.println(e.getMessage());

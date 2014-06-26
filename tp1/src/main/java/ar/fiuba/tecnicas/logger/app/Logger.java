@@ -40,7 +40,6 @@ public class Logger {
     public Logger(String name)throws MalformedConfigFileException{
         this();
         this.name = name;
-
     }
     
     private Config getConfigFile(String filename) throws MalformedConfigFileException{
